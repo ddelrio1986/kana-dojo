@@ -125,8 +125,6 @@ const SetDictionary = memo(function SetDictionary({
                   className={clsx(
                     'flex h-6 w-6 items-center justify-center rounded-full bg-(--card-color) text-(--main-color)',
                     'transition-colors duration-200',
-                    'max-md:group-active:bg-(--main-color)/15',
-                    'md:group-hover:bg-(--main-color)/15',
                   )}
                 >
                   <Volume2 size={15} className='fill-current' />

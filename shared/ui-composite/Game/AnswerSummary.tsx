@@ -248,9 +248,9 @@ const ReadingsList = ({
               'border-r-1 border-(--border-color)',
           )}
         >
-          <span className='flex items-center gap-1.5'>
-            <span>{reading}</span>
-            <span className='flex h-7 w-7 items-center justify-center rounded-full bg-(--background-color) text-(--main-color) transition-colors duration-200 max-md:group-active:bg-(--main-color)/15 md:group-hover:bg-(--main-color)/15'>
+            <span className='flex items-center gap-1.5'>
+              <span>{reading}</span>
+            <span className='flex h-7 w-7 items-center justify-center rounded-full bg-(--background-color) text-(--main-color) transition-colors duration-200'>
               <Volume2 size={15} className='fill-current' />
             </span>
           </span>
@@ -412,7 +412,7 @@ const VocabSummary = ({
           aria-label={`Play pronunciation for ${payload.word}`}
         >
           <span>{displayReading}</span>
-          <span className='flex h-7 w-7 items-center justify-center rounded-full bg-(--background-color) text-(--main-color) transition-colors duration-200 max-md:group-active:bg-(--main-color)/15 md:group-hover:bg-(--main-color)/15'>
+          <span className='flex h-7 w-7 items-center justify-center rounded-full bg-(--background-color) text-(--main-color) transition-colors duration-200'>
             <Volume2 size={15} className='fill-current' />
           </span>
         </motion.button>
