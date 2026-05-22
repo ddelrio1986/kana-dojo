@@ -58,7 +58,7 @@ const KanaUnitSelector = ({ selected, onSelect, selectedSubset, onSubsetSelect }
                       damping: 30,
                     }}
                   >
-                    <div className='h-full w-full rounded-[1.25rem] border-b-10 border-(--main-color-accent) bg-(--main-color)' />
+                    <div className='h-full w-full rounded-[1.25rem] border-b-8 border-(--main-color-accent) bg-(--main-color)' />
                   </motion.div>
                 )}
                 <ActionButton
@@ -72,7 +72,7 @@ const KanaUnitSelector = ({ selected, onSelect, selectedSubset, onSubsetSelect }
                     'relative z-10 w-full flex-row items-center justify-center gap-2 px-4 pt-3 pb-5',
                     isSelected
                       ? 'bg-transparent text-(--background-color)'
-                      : 'bg-transparent text-(--main-color) hover:bg-(--border-color)/50',
+                      : 'bg-transparent text-(--secondary-color) hover:bg-(--border-color)/50',
                   )}
                 >
                   <span>{option.label}</span>

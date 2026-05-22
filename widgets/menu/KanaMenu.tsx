@@ -46,14 +46,17 @@ const KanaMenu = ({ filter = 'all' }: { filter?: KanaMenuFilter }) => {
             Select All Kana
           </ActionButton>
           <ActionButton
-            onClick={() => setViewMode(v => v === 'full' ? 'compact' : 'full')}
+            onClick={() => {
+              playClick();
+              setViewMode(v => v === 'full' ? 'compact' : 'full');
+            }}
             className='w-auto self-stretch px-8 py-3'
             borderBottomThickness={14}
             borderRadius='3xl'
             colorScheme='secondary'
             borderColorScheme='secondary'
           >
-            {viewMode === 'full' ? <LayoutGrid size={22} /> : <List size={22} />}
+            {viewMode === 'full' ? <LayoutGrid size={22} fill='currentColor' /> : <List size={22} />}
           </ActionButton>
         </div>
         <KanaCards filter={filter} viewMode={viewMode} />
