@@ -1760,7 +1760,7 @@
   {
     "id": 294,
     "fact": "The concept of 'mottainai' (もったいない) expresses regret over waste and encourages respect for resources.",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
