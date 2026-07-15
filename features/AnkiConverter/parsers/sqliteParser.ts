@@ -70,25 +70,6 @@ interface RawCard {
   data: string;
 }
 
-/**
- * Raw collection metadata from col table
- */
-interface RawColData {
-  id: number;
-  crt: number;
-  mod: number;
-  scm: number;
-  ver: number;
-  dty: number;
-  usn: number;
-  ls: number;
-  conf: string;
-  models: string;
-  decks: string;
-  dconf: string;
-  tags: string;
-}
-
 // sql.js instance cache
 let sqlPromise: Promise<SqlJsStatic> | null = null;
 

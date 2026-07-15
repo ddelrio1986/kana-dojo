@@ -101,7 +101,7 @@ export function useTrivia(options: UseTriviaOptions = {}): UseTriviaResult {
     void loadTrivia();
 
     return () => controller.abort();
-  }, [enabled, query, reloadKey]);
+  }, [enabled, query, reloadKey, shouldBypassCache]);
 
   return {
     data,

@@ -10,8 +10,8 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { classifyVerb } from '../lib/engine/classifyVerb';
-import { getGodanTeForm, getGodanTaForm } from '../lib/engine/conjugateGodan';
+import { classifyVerb } from '../lib/engine';
+import { getGodanTeForm, getGodanTaForm } from '../lib/engine';
 
 // ============================================================================
 // Test Data - Godan Verbs by Ending Type

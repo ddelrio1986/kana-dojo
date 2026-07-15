@@ -1,10 +1,14 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useClick, useCorrect, useError } from '@/shared/hooks/generic/useAudio';
-import { allKana } from '../data/kanaData';
+import { motion } from 'framer-motion';
+import {
+  useClick,
+  useCorrect,
+  useError,
+} from '@/shared/hooks/generic/useAudio';
+import { allKana, type KanaEntry } from '../data/kanaData';
 import clsx from 'clsx';
-import { Search, Timer, Trophy, AlertCircle } from 'lucide-react';
+import { Search, Timer, AlertCircle } from 'lucide-react';
 
 const GRID_SIZE = 36; // 6x6
 const ROUND_TIME = 10;
@@ -12,7 +16,7 @@ const ROUND_TIME = 10;
 export default function KanaSearch() {
   const [level, setLevel] = useState(1);
   const [target, setTarget] = useState(allKana[0]);
-  const [grid, setGrid] = useState<any[]>([]);
+  const [grid, setGrid] = useState<KanaEntry[]>([]);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME);
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState<'playing' | 'gameover' | 'idle'>(
@@ -66,7 +70,7 @@ export default function KanaSearch() {
     return () => clearInterval(timer);
   }, [gameState, timeLeft, playError]);
 
-  const handleSelect = (kana: any) => {
+  const handleSelect = (kana: KanaEntry) => {
     if (gameState !== 'playing') return;
 
     if (kana.kana === target.kana) {
@@ -123,7 +127,7 @@ export default function KanaSearch() {
           </div>
           <div>
             <h2 className='text-3xl font-black text-(--main-color)'>
-              TIME'S UP!
+              TIME&apos;S UP!
             </h2>
             <p className='text-(--secondary-color)'>
               You reached Level {level}
@@ -139,7 +143,7 @@ export default function KanaSearch() {
       ) : (
         <div className='flex w-full flex-col items-center gap-8'>
           <div className='flex items-center gap-6'>
-            <div className='flex min-w-[100px] flex-col items-center rounded-2xl bg-(--main-color) p-4 text-white shadow-xl'>
+            <div className='flex min-w-25 flex-col items-center rounded-2xl bg-(--main-color) p-4 text-white shadow-xl'>
               <span className='text-xs font-bold tracking-widest uppercase opacity-80'>
                 Target
               </span>

@@ -1,11 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { getTopCharacters } from '../components/stats/CharacterMasteryPanel';
-import type {
-  CharacterMasteryItem,
-  ContentType,
-  MasteryLevel,
-} from '../types/stats';
+import { getTopCharacters } from '../components/stats';
+import type { CharacterMasteryItem, ContentType, MasteryLevel } from '../types';
 
 /**
  * Helper to generate a CharacterMasteryItem with specific properties

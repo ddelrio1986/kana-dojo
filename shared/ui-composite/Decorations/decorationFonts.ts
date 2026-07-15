@@ -12,5 +12,6 @@ type DecorationFont = {
 // Use the appropriate fonts based on environment
 export const decorationFonts: DecorationFont[] =
   process.env.NODE_ENV === 'production'
-    ? require('./decorationFonts.prod').decorationFonts
+    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
+      require('./decorationFonts.prod').decorationFonts
     : []; // Empty array in development to avoid Next.js font compilation

@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { statsApi } from '@/shared/events';
 import { shuffle } from '@/shared/utils/shuffle';
-import type { ContentAdapter, GameMode } from '../adapters/ContentAdapter';
+import type { ContentAdapter, GameMode } from '@/widgets';
 
 export interface GameEngineConfig<T> {
   content: T[];
@@ -89,4 +89,3 @@ export function useGameEngine<T>({
     isComplete,
   };
 }
-

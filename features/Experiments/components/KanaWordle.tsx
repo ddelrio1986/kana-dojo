@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import { allKana } from '../data/kanaData';
 
@@ -19,11 +19,7 @@ const KanaWordle = () => {
     'playing',
   );
 
-  useEffect(() => {
-    generateOptions();
-  }, [target]);
-
-  const generateOptions = () => {
+  const generateOptions = useCallback(() => {
     const opts = [target];
     while (opts.length < 6) {
       const rand = allKana[Math.floor(Math.random() * allKana.length)];
@@ -32,7 +28,11 @@ const KanaWordle = () => {
       }
     }
     setOptions(opts.sort(() => Math.random() - 0.5));
-  };
+  }, [target]);
+
+  useEffect(() => {
+    generateOptions();
+  }, [generateOptions]);
 
   const handleGuess = (kana: (typeof allKana)[0]) => {
     if (gameState !== 'playing') return;
@@ -71,7 +71,7 @@ const KanaWordle = () => {
           Find the kana that sounds like:
         </p>
         <p className='mt-2 font-mono text-3xl text-(--accent-color)'>
-          "{target.romanji}"
+          &ldquo;{target.romanji}&rdquo;
         </p>
       </div>
 

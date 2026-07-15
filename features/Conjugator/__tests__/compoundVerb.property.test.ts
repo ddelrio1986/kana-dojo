@@ -10,8 +10,8 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { classifyVerb } from '../lib/engine/classifyVerb';
-import { conjugateIrregular } from '../lib/engine/conjugateIrregular';
+import { classifyVerb } from '../lib/engine';
+import { conjugateIrregular } from '../lib/engine';
 import {
   isSuruCompound,
   isKuruCompound,
@@ -19,7 +19,7 @@ import {
   getKuruCompoundPrefix,
   COMMON_SURU_COMPOUNDS,
   COMMON_KURU_COMPOUNDS,
-} from '../lib/engine/conjugateCompound';
+} from '../lib/engine';
 
 // ============================================================================
 // Test Data

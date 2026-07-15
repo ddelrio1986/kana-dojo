@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 /**
  * Translation Validation Script
  *
@@ -173,7 +172,7 @@ function validateInterpolation(namespace) {
         if (typeof value === 'string') {
           const matches = [...value.matchAll(variableRegex)];
           if (matches.length > 0) {
-            const _variables = matches.map(m => m[1]);
+            matches.map(m => m[1]);
             // You could store these and compare across languages
             // For now, just verify they're valid format
           }

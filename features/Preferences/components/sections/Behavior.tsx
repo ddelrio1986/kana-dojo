@@ -2,7 +2,6 @@
 import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import { AudioLines, VolumeX, Volume2 } from 'lucide-react';
-import { useJapaneseTTS } from '@/features/Preferences/hooks/useJapaneseTTS';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 // import{Command, KeyboardOff} from 'lucide-react'
 // import HotkeyReference from './HotkeyReference';
@@ -38,14 +37,6 @@ const Behavior = () => {
   );
 
   // Unused but kept for future TTS voice panel
-  const {
-    availableVoices,
-    currentVoice,
-    setVoice,
-    speak,
-    refreshVoices,
-    hasJapaneseVoices,
-  } = useJapaneseTTS();
 
   /*   const hotkeysOn = useThemeStore(state => state.hotkeysOn);
   const setHotkeys = useThemeStore(state => state.setHotkeys);
@@ -233,4 +224,3 @@ const Behavior = () => {
 };
 
 export default Behavior;
-

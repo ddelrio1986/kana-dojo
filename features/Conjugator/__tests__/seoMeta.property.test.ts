@@ -16,7 +16,7 @@ import {
   generateVerbMeta,
   generateCanonicalUrl,
   BASE_META,
-} from '../lib/seo/generateMeta';
+} from '../lib/seo';
 import type { VerbInfo } from '../types';
 
 // ============================================================================

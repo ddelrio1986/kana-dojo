@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/shared/utils/utils';
 import { Clock, Target, Zap, Trophy, Timer } from 'lucide-react';
-import { ActionButton } from '@/shared/ui/components/ActionButton';
 import type { TimedModeStats, ContentType } from '../../types/stats';
 
 /**
@@ -267,4 +266,3 @@ export function getTimedModeDisplayValues(stats: TimedModeStats): {
     total: stats.correct + stats.wrong,
   };
 }
-

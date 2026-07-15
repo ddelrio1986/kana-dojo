@@ -10,13 +10,8 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { classifyVerb } from '../lib/engine/classifyVerb';
-import {
-  GODAN_ENDINGS,
-  IRREGULAR_VERBS,
-  KNOWN_ICHIDAN_VERBS,
-  FALSE_ICHIDAN_VERBS,
-} from '../data/verbData';
+import { classifyVerb } from '../lib/engine';
+import { GODAN_ENDINGS, FALSE_ICHIDAN_VERBS } from '../data/verbData';
 
 // ============================================================================
 // Test Data - Known Verbs with Expected Classifications

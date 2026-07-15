@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { MousePointer } from 'lucide-react';
 import { kana } from '@/features/Kana/data/kana';
 import useKanaStore from '@/features/Kana/store/useKanaStore';
-import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
+import { useThemePreferences } from '@/features/Preferences';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 import { cn } from '@/shared/utils/utils';
@@ -23,7 +23,7 @@ const Subset = ({ sliceRange, subgroup }: SubsetProps) => {
   const kanaGroupIndices = useKanaStore(state => state.kanaGroupIndices);
   const addKanaGroupIndex = useKanaStore(state => state.addKanaGroupIndex);
   const addKanaGroupIndices = useKanaStore(state => state.addKanaGroupIndices);
-  const displayKana = usePreferencesStore(state => state.displayKana);
+  const { displayKana } = useThemePreferences();
 
   const getGlobalIndex = (localIndex: number) => localIndex + sliceRange[0];
 

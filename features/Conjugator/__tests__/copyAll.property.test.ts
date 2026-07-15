@@ -10,7 +10,7 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { conjugate } from '../lib/engine/conjugate';
+import { conjugate } from '../lib/engine';
 import { ALL_CONJUGATION_CATEGORIES } from '../types';
 import type {
   ConjugationResult,

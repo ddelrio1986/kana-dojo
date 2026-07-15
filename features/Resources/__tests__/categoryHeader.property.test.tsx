@@ -11,7 +11,7 @@ import React from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 import * as fc from 'fast-check';
 import { render, cleanup } from '@testing-library/react';
-import { CategoryHeader } from '../components/CategoryHeader';
+import { CategoryHeader } from '../components';
 import { CATEGORY_IDS, type Category, type CategoryId } from '../types';
 
 // Clean up after each test

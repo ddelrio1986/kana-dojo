@@ -12,8 +12,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import * as fc from 'fast-check';
 import useConjugatorStore from '../store/useConjugatorStore';
-import { isValidVerb, getVerbInfo } from '../lib/engine';
-import type { VerbInfo } from '../types';
+import { getVerbInfo } from '../lib/engine';
 
 // ============================================================================
 // Test Data - Sample Verbs
@@ -213,9 +212,7 @@ describe('URL Parameter Conjugation Properties', () => {
           useConjugatorStore.getState().reset();
 
           // Simulate URL parameter initialization with invalid input
-          const result = useConjugatorStore
-            .getState()
-            .initFromUrlParams({ verb: input });
+          useConjugatorStore.getState().initFromUrlParams({ verb: input });
 
           // Get current state
           const state = useConjugatorStore.getState();

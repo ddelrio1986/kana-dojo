@@ -4,10 +4,8 @@ import clsx from 'clsx';
 import { Circle, CircleCheck } from 'lucide-react';
 import { type KanaGroup } from '@/features/Kana/data/kana';
 import useKanaStore from '@/features/Kana/store/useKanaStore';
-import { useStatsStore } from '@/features/Progress';
+import { useStatsStore, KANA_ROW_MASTERY_TARGET } from '@/features/Progress';
 import { useClick } from '@/shared/hooks/generic/useAudio';
-import { KANA_ROW_MASTERY_TARGET } from '@/features/Progress/lib/setProgress';
-import { cardBorderStyles } from '@/shared/utils/styles';
 
 interface KanaRowCardProps {
   kanaGroup: KanaGroup;
@@ -41,7 +39,10 @@ const KanaRowCard = ({ kanaGroup, globalIndex }: KanaRowCardProps) => {
     if (kana.length === 0) return 0;
     const total = kana.reduce((sum, char) => {
       const correct = characterMastery[char]?.correct ?? 0;
-      return sum + Math.min(correct, KANA_ROW_MASTERY_TARGET) / KANA_ROW_MASTERY_TARGET;
+      return (
+        sum +
+        Math.min(correct, KANA_ROW_MASTERY_TARGET) / KANA_ROW_MASTERY_TARGET
+      );
     }, 0);
     return total / kana.length;
   })();
@@ -52,10 +53,12 @@ const KanaRowCard = ({ kanaGroup, globalIndex }: KanaRowCardProps) => {
   const rowLabel = `${firstKana}-group`;
 
   return (
-    <div className={clsx(
-      'flex flex-col gap-4 p-4 border-0 border-(--border-color) rounded-3xl bg-(--card-color) transition-250 ',
-      // selected && 'outline-4 outline-(--secondary-color)/80',
-    )}>
+    <div
+      className={clsx(
+        'transition-250 flex flex-col gap-4 rounded-3xl border-0 border-(--border-color) bg-(--card-color) p-4',
+        // selected && 'outline-4 outline-(--secondary-color)/80',
+      )}
+    >
       {/* Progress Bar */}
       <div className='w-full'>
         <div className='h-7 w-full overflow-hidden rounded-[1rem] bg-(--background-color)'>
@@ -79,7 +82,7 @@ const KanaRowCard = ({ kanaGroup, globalIndex }: KanaRowCardProps) => {
           addKanaGroupIndex(globalIndex);
         }}
         className={clsx(
-          'group flex items-center justify-center gap-2 text-[1.5rem] w-full',
+          'group flex w-full items-center justify-center gap-2 text-[1.5rem]',
           'rounded-[1.5rem] hover:cursor-pointer',
           'transition-all duration-250 ease-in-out',
           'border-b-10 px-2 py-3',
@@ -97,14 +100,14 @@ const KanaRowCard = ({ kanaGroup, globalIndex }: KanaRowCardProps) => {
       </button>
 
       {/* Kana row (large) + Romaji row (smaller) */}
-      <div className='flex flex-col items-start gap-1 w-full'>
+      <div className='flex w-full flex-col items-start gap-1'>
         <div
-          className='text-[2.1rem] sm:text-[2.5rem] font-normal text-(--main-color) tracking-wide'
+          className='text-[2.1rem] font-normal tracking-wide text-(--main-color) sm:text-[2.5rem]'
           lang='ja'
         >
           {renderSeparatedText(kanaGroup.kana, 'text-(--border-color)')}
         </div>
-        <div className='text-[1.6rem] font-normal text-(--secondary-color) tracking-wide'>
+        <div className='text-[1.6rem] font-normal tracking-wide text-(--secondary-color)'>
           {renderSeparatedText(kanaGroup.romanji, 'text-(--border-color)')}
         </div>
       </div>

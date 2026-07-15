@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useEffect } from 'react';
-import { X, Keyboard, Search, Loader2 } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import { cn } from '@/shared/utils/utils';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 import type { ConjugationError } from '../types';
@@ -227,4 +227,3 @@ function getErrorMessage(error: ConjugationError): string {
       return error.message || 'An error occurred';
   }
 }
-

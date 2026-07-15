@@ -25,7 +25,7 @@ import {
   SUPPORTED_EXTENSIONS,
   formatBytes,
   toDisplayName,
-} from '../features/Preferences/config/imageProcessing.js';
+} from '@/features/Preferences/config/imageProcessing';
 
 const SOURCE_DIR = 'data/wallpapers-source';
 const OUTPUT_DIR = '.generated/wallpapers';
@@ -173,7 +173,9 @@ function validateSourceFilenames(files: string[]): void {
     ids.set(baseName, matches);
   }
 
-  const duplicates = [...ids.entries()].filter(([, matches]) => matches.length > 1);
+  const duplicates = [...ids.entries()].filter(
+    ([, matches]) => matches.length > 1,
+  );
   if (invalid.length === 0 && duplicates.length === 0) return;
 
   console.error('\nInvalid wallpaper source filenames.');
@@ -182,7 +184,9 @@ function validateSourceFilenames(files: string[]): void {
       .name.toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
-    console.error(`  ${file} -> rename to ${suggested}${extname(file).toLowerCase()}`);
+    console.error(
+      `  ${file} -> rename to ${suggested}${extname(file).toLowerCase()}`,
+    );
   }
   for (const [id, matches] of duplicates) {
     console.error(`  Duplicate wallpaper ID "${id}": ${matches.join(', ')}`);
@@ -190,7 +194,10 @@ function validateSourceFilenames(files: string[]): void {
   process.exit(1);
 }
 
-function getExpectedOutputNames(baseName: string, sourceWidth: number): string[] {
+function getExpectedOutputNames(
+  baseName: string,
+  sourceWidth: number,
+): string[] {
   const outputs: string[] = [];
   for (const width of OUTPUT_WIDTHS) {
     if (width > sourceWidth) continue;
@@ -334,7 +341,9 @@ async function processImage(
   return result;
 }
 
-async function getAvailableWidthsByBaseName(): Promise<Map<string, Set<number>>> {
+async function getAvailableWidthsByBaseName(): Promise<
+  Map<string, Set<number>>
+> {
   const map = new Map<string, Set<number>>();
 
   try {
@@ -530,7 +539,11 @@ async function main() {
   }
 
   const results: ProcessResult[] = [];
-  const toProcess: { file: string; fingerprint: SourceFingerprint; reason: string }[] = [];
+  const toProcess: {
+    file: string;
+    fingerprint: SourceFingerprint;
+    reason: string;
+  }[] = [];
 
   for (const file of sourceFiles) {
     try {
@@ -592,7 +605,8 @@ async function main() {
     console.log(`\nReason: ${item.reason}`);
     const result = await processImage(item.file, item.fingerprint);
     results.push(result);
-    if (!result.error) nextSources[item.fingerprint.baseName] = item.fingerprint;
+    if (!result.error)
+      nextSources[item.fingerprint.baseName] = item.fingerprint;
   }
 
   results.sort((a, b) => a.baseName.localeCompare(b.baseName));
@@ -605,7 +619,11 @@ async function main() {
     generatedAt: new Date().toISOString(),
     sources: nextSources,
   };
-  await writeFile(BUILD_STATE_PATH, JSON.stringify(buildState, null, 2), 'utf-8');
+  await writeFile(
+    BUILD_STATE_PATH,
+    JSON.stringify(buildState, null, 2),
+    'utf-8',
+  );
 
   const uploadFiles = results.flatMap(result =>
     result.outputs.map(output => toPlanFile(result, output)),
@@ -656,7 +674,9 @@ async function main() {
     } else if (result.skipped) {
       console.log(`  SKIP  ${result.source} (${result.reason})`);
     } else {
-      console.log(`  DONE  ${result.source} (${formatBytes(result.originalSize)})`);
+      console.log(
+        `  DONE  ${result.source} (${formatBytes(result.originalSize)})`,
+      );
       for (const output of result.outputs) {
         console.log(`        ${output.file}: ${formatBytes(output.size)}`);
       }

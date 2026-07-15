@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import { MousePointer, Circle, CircleCheck } from 'lucide-react';
 import { kana } from '@/features/Kana/data/kana';
 import useKanaStore from '@/features/Kana/store/useKanaStore';
-import useStatsStore from '@/features/Progress/store/useStatsStore';
 import {
+  useStatsStore,
   KANA_ROW_MASTERY_TARGET,
   KANA_MAX_STARS,
   KANA_ROW_MASTERY_CAP,
-} from '@/features/Progress/lib/setProgress';
+} from '@/features/Progress';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 import MasteryBar from '@/shared/ui/components/MasteryBar';
@@ -92,8 +92,9 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
   return (
     <fieldset className='flex w-full flex-col items-stretch gap-0'>
       {kanaGroups.map((group, i) => {
-        const { progress: progressFraction, stars } =
-          getRowProgressAndStars(group.kana);
+        const { progress: progressFraction, stars } = getRowProgressAndStars(
+          group.kana,
+        );
         const progressPercent = Math.round(progressFraction * 100);
 
         const selected = isChecked(i);
@@ -110,7 +111,7 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
           <div
             key={group.groupName}
             className={clsx(
-              'flex flex-col items-start justify-start gap-4 py-4 w-full',
+              'flex w-full flex-col items-start justify-start gap-4 py-4',
               !isLastInSubset && 'border-b border-(--border-color)',
             )}
           >
@@ -130,7 +131,7 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
                 addKanaGroupIndex(getGlobalIndex(i));
               }}
               className={clsx(
-                'group flex items-center justify-center gap-2 text-[1.5rem] w-full',
+                'group flex w-full items-center justify-center gap-2 text-[1.5rem]',
                 'rounded-[1.5rem] hover:cursor-pointer',
                 'transition-all duration-250 ease-in-out',
                 'border-b-10 px-2 py-3',
@@ -140,9 +141,7 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
               )}
             >
               {selected ? (
-                <CircleCheck
-                  className='mt-0.5 fill-current text-(--background-color) duration-250'
-                />
+                <CircleCheck className='mt-0.5 fill-current text-(--background-color) duration-250' />
               ) : (
                 <Circle className='mt-0.5 text-(--border-color) duration-250' />
               )}
@@ -150,14 +149,14 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
             </button>
 
             {/* Kana row (large) + Romaji row (smaller), both left-aligned */}
-            <div className='flex flex-col items-start gap-2 w-full'>
+            <div className='flex w-full flex-col items-start gap-2'>
               <div
-                className='text-[3rem] font-normal text-(--main-color) tracking-wide'
+                className='text-[3rem] font-normal tracking-wide text-(--main-color)'
                 lang='ja'
               >
                 {renderSeparatedText(group.kana, 'text-(--border-color)')}
               </div>
-              <div className='text-[1.5rem] font-normal text-(--secondary-color) tracking-wide'>
+              <div className='text-[1.5rem] font-normal tracking-wide text-(--secondary-color)'>
                 {renderSeparatedText(group.romanji, 'text-(--border-color)')}
               </div>
             </div>
@@ -166,7 +165,7 @@ const SubsetNew = ({ sliceRange, subgroup }: SubsetProps) => {
       })}
 
       {/* Select All Button */}
-      <div className='flex w-full flex-row gap-2 mt-2'>
+      <div className='mt-2 flex w-full flex-row gap-2'>
         <ActionButton
           onClick={e => {
             e.currentTarget.blur();

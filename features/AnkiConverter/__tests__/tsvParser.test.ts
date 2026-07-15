@@ -15,7 +15,7 @@ import {
   detectHeader,
   detectTagsColumn,
   splitLines,
-} from '../parsers/tsvParser';
+} from '../parsers';
 
 describe('TSV Parser', () => {
   describe('unescapeTSV', () => {

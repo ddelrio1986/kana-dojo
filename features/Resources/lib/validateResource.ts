@@ -3,7 +3,6 @@
 // ============================================================================
 
 import type {
-  Resource,
   DifficultyLevel,
   PriceType,
   Platform,

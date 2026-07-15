@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 import type { IVocabObj } from '@/features/Vocabulary/store/useVocabStore';
 import { Random } from 'random-js';
-import { useCorrect, useError, useClick } from '@/shared/hooks/generic/useAudio';
+import {
+  useCorrect,
+  useError,
+  useClick,
+} from '@/shared/hooks/generic/useAudio';
 import { getGlobalAdaptiveSelector } from '@/shared/utils/adaptiveSelection';
 import Stars from '@/shared/ui-composite/Game/Stars';
 import { useCrazyModeTrigger } from '@/features/CrazyMode/hooks/useCrazyModeTrigger';
@@ -102,8 +106,12 @@ const VocabTilesMode = ({
 
   const isGlassMode = useThemePreferences().isGlassMode;
 
-  const { startAnswerTimer, pauseAnswerTimer, getAnswerTimeMs, resetAnswerTimer } =
-    useAnswerTimer();
+  const {
+    startAnswerTimer,
+    pauseAnswerTimer,
+    getAnswerTimeMs,
+    resetAnswerTimer,
+  } = useAnswerTimer();
   const { playCorrect } = useCorrect();
   const { playErrorTwice } = useError();
   const { playClick } = useClick();
@@ -419,7 +427,7 @@ const VocabTilesMode = ({
         questionId: questionData.word,
         questionPrompt: String(
           questionData.quizType === 'meaning' && isReverse
-            ? questionData.wordObj?.meanings?.[0] ?? questionData.word
+            ? (questionData.wordObj?.meanings?.[0] ?? questionData.word)
             : questionData.word,
         ),
         expectedAnswers: [questionData.correctAnswer],
@@ -467,7 +475,7 @@ const VocabTilesMode = ({
         questionId: questionData.word,
         questionPrompt: String(
           questionData.quizType === 'meaning' && isReverse
-            ? questionData.wordObj?.meanings?.[0] ?? questionData.word
+            ? (questionData.wordObj?.meanings?.[0] ?? questionData.word)
             : questionData.word,
         ),
         expectedAnswers: [questionData.correctAnswer],
@@ -502,7 +510,6 @@ const VocabTilesMode = ({
     setScore,
     externalOnWrong,
     externalIsReverse,
-    decideNextReverseMode,
     recordReverseModeWrong,
     logAttempt,
     isReverse,
@@ -550,13 +557,14 @@ const VocabTilesMode = ({
   }, [
     playClick,
     externalIsReverse,
-    decideNextReverseMode,
     decideNextTilesCelebrationMode,
     externalOnCorrect,
     questionData.word,
-    resetGame,
     getNextQuizType,
     quizType,
+    isReverse,
+    resetGame,
+    decideNextReverseMode,
   ]);
 
   const handleTryAgain = useCallback(() => {
@@ -625,7 +633,7 @@ const VocabTilesMode = ({
                   animate={{ opacity: 1, y: 0 }}
                   key={`${questionData.word}-${questionData.quizType}`}
                 >
-                  {/* 
+                  {/*
                     Display logic by case:
                     - Meaning + Normal: Show word with furigana
                     - Meaning + Reverse: Show meaning (English)

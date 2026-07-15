@@ -20,7 +20,7 @@ import {
   type Mock,
 } from 'vitest';
 import fc from 'fast-check';
-import { createConversionPipeline } from '../lib/conversionPipeline';
+import { createConversionPipeline } from '../lib';
 
 /**
  * Create TSV content for testing
@@ -203,7 +203,6 @@ describe('Property 15: Local processing guarantee', () => {
             ...args,
           ) as unknown as NodeJS.Timeout;
         };
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         globalThis.setTimeout = timeoutWrapper as any;
 
         try {
@@ -250,11 +249,7 @@ describe('Property 15: Local processing guarantee', () => {
           }
 
           // Verify result contains expected structure
-          if (typeof result.metadata.totalCards !== 'number') {
-            return false;
-          }
-
-          return true;
+          return typeof result.metadata.totalCards === 'number';
         } catch {
           // Conversion errors are acceptable - we're testing for network isolation
           // Just verify no network calls were made even on error

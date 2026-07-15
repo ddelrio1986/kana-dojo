@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 import useAchievementStore, {
@@ -24,6 +24,13 @@ const AchievementNotification = ({
   const { playClick } = useClick();
   const [isVisible, setIsVisible] = useState(true);
 
+  const handleDismiss = useCallback(() => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onDismiss(notification.id);
+    }, 300);
+  }, [notification.id, onDismiss]);
+
   // Auto-dismiss after 8 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,14 +38,7 @@ const AchievementNotification = ({
     }, 8000);
 
     return () => clearTimeout(timer);
-  }, []);
-
-  const handleDismiss = () => {
-    setIsVisible(false);
-    setTimeout(() => {
-      onDismiss(notification.id);
-    }, 300);
-  };
+  }, [handleDismiss]);
 
   const handleViewDetails = () => {
     playClick();
@@ -177,4 +177,3 @@ export const AchievementNotificationContainer = () => {
 };
 
 export default AchievementNotification;
-

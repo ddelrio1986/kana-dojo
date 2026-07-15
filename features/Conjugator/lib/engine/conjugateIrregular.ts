@@ -11,7 +11,7 @@
  * Requirements: 2.3-2.6, 4.7, 4.8
  */
 
-import type { VerbInfo, ConjugationForm, IrregularType } from '../../types';
+import type { VerbInfo, ConjugationForm } from '../../types';
 import { CONJUGATION_FORMS } from '../../data/conjugationForms';
 import { hiraganaToRomaji } from './classifyVerb';
 

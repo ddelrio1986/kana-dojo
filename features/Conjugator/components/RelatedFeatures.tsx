@@ -2,17 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Keyboard,
-  Book,
-  BookOpen,
-  BrainCircuit,
-  Sparkles,
-  Zap,
-  Layout,
-  Info,
-} from 'lucide-react';
-import { cn } from '@/shared/utils/utils';
+import { Keyboard, BookOpen, Zap } from 'lucide-react';
 import { ReactNode } from 'react';
 
 interface InternalLink {
@@ -97,4 +87,3 @@ export default function RelatedFeatures() {
     </section>
   );
 }
-

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { getStatsOverviewDisplayValues } from '../components/stats/StatsPage';
+import { getStatsOverviewDisplayValues } from '../components/stats';
 
 /**
  * Arbitrary for generating valid stats overview data

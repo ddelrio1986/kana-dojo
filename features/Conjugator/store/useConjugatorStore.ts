@@ -15,7 +15,6 @@ import type {
   ConjugationCategory,
   ConjugationError,
   HistoryEntry,
-  VerbType,
 } from '../types';
 import { ALL_CONJUGATION_CATEGORIES } from '../types';
 import { conjugate } from '../lib/engine/conjugate';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Trash2, Clock, X, History } from 'lucide-react';
+import { Trash2, X } from 'lucide-react';
 import { cn } from '@/shared/utils/utils';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 import {
@@ -212,24 +212,6 @@ function HistoryRecord({
 }
 
 /**
- * Format timestamp to relative time
- */
-function formatTimestamp(timestamp: number): string {
-  const now = Date.now();
-  const diffMs = now - timestamp;
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'now';
-  if (diffMins < 60) return `${diffMins}m`;
-  if (diffHours < 24) return `${diffHours}h`;
-  if (diffDays < 7) return `${diffDays}d`;
-
-  return new Date(timestamp).toLocaleDateString();
-}
-
-/**
  * Get display info for verb type
  */
 function getVerbTypeInfo(type: VerbType): {
@@ -269,4 +251,3 @@ function getVerbTypeInfo(type: VerbType): {
       };
   }
 }
-

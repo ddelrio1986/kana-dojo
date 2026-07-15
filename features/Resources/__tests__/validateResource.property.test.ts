@@ -4,7 +4,7 @@ import {
   validateResource,
   REQUIRED_RESOURCE_FIELDS,
   type RequiredResourceField,
-} from '../lib/validateResource';
+} from '../lib';
 import {
   DIFFICULTY_LEVELS,
   PRICE_TYPES,

@@ -11,11 +11,8 @@ import { getWallpaperById } from '@/features/Preferences/data/wallpapers/wallpap
 import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
 import clsx from 'clsx';
 import { useClick, useLong } from '@/shared/hooks/generic/useAudio';
-import { buttonBorderStyles } from '@/shared/utils/styles';
 import { useState } from 'react';
-import { Dice5 } from 'lucide-react';
 import { Random } from 'random-js';
-import { useCustomThemeStore } from '@/features/Preferences/store/useCustomThemeStore';
 import CollapsibleSection from '../shared/CollapsibleSection';
 import CustomWallpaperUpload from './CustomWallpaperUpload';
 
@@ -28,11 +25,6 @@ type ThemesProps = {
 const Themes = ({ useNewIconDesign = false }: ThemesProps) => {
   const { playClick } = useClick();
   const { playLongLoop, stopLongLoop } = useLong();
-  const {
-    addTheme: _addTheme,
-    removeTheme: _removeTheme,
-    themes: _themes,
-  } = useCustomThemeStore();
 
   const [isAdding, _setIsAdding] = useState(true);
   const [_customTheme, _setCustomTheme] = useState({
@@ -52,7 +44,7 @@ const Themes = ({ useNewIconDesign = false }: ThemesProps) => {
   );
 
   // Initialize with first theme to avoid hydration mismatch
-  const [randomTheme, setRandomTheme] = useState(themeSets[2].themes[0]);
+  const [, setRandomTheme] = useState(themeSets[2].themes[0]);
 
   // Set random theme only on client side after mount
   const [_isMounted, setIsMounted] = useState(false);
@@ -72,7 +64,7 @@ const Themes = ({ useNewIconDesign = false }: ThemesProps) => {
       applyTheme(themeId);
     }, 150);
   };
-  /* 
+  /*
   const handleCustomTheme = () => {
     // To keep the id same as the others themes (default)
     const themeId = customTheme.id.replaceAll(' ', '-').toLowerCase();
@@ -701,4 +693,3 @@ const Themes = ({ useNewIconDesign = false }: ThemesProps) => {
 };
 
 export default Themes;
-

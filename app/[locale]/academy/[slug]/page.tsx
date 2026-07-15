@@ -13,7 +13,7 @@ import {
 } from '@/features/Blog';
 import { StructuredData } from '@/shared/ui-composite/SEO/StructuredData';
 import { AuthorSchema } from '@/shared/ui-composite/SEO/AuthorSchema';
-import { routing, type Locale as _Locale } from '@/core/i18n/routing';
+import { routing } from '@/core/i18n/routing';
 import type { Locale as BlogLocale } from '@/features/Blog';
 
 interface AcademyPostPageProps {
@@ -273,4 +273,3 @@ function generateHeadingId(text: string): string {
     .replace(/-+/g, '-')
     .trim();
 }
-

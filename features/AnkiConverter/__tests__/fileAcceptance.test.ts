@@ -13,7 +13,7 @@ import {
   isSupportedFormat,
   getSupportedExtensions,
   getAcceptString,
-} from '../lib/formatDetection';
+} from '../lib';
 
 describe('File Acceptance', () => {
   describe('Supported Extensions', () => {

@@ -1,6 +1,6 @@
 import type { IVocabObj } from '@/entities/vocabulary';
 import { shuffle } from '@/shared/utils/shuffle';
-import type { ContentAdapter, GameMode } from './ContentAdapter';
+import type { ContentAdapter, GameMode } from '@/widgets';
 
 /**
  * Vocabulary Content Adapter
@@ -56,4 +56,3 @@ export const vocabularyAdapter: ContentAdapter<IVocabObj> = {
     };
   },
 };
-

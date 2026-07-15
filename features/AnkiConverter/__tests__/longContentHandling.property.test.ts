@@ -9,8 +9,8 @@
 
 import { describe, it, expect } from 'vitest';
 import fc from 'fast-check';
-import { buildJson } from '../lib/jsonBuilder';
-import { extractText } from '../lib/textExtractor';
+import { buildJson } from '../lib';
+import { extractText } from '../lib';
 import type { ParsedAnkiData, Note, Card, DeckInfo, NoteType } from '../types';
 
 /**

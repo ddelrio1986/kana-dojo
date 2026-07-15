@@ -14,7 +14,7 @@ import {
   isValidJsonOutput,
   countTotalCards,
   flattenDeckNames,
-} from '../lib/jsonBuilder';
+} from '../lib';
 import type {
   ParsedAnkiData,
   Note,
@@ -23,25 +23,7 @@ import type {
   NoteType,
   Field,
   AnkiMetadata,
-  Deck,
-  OutputCard,
 } from '../types';
-
-/**
- * Arbitrary for generating valid field definitions
- */
-const fieldArb = (ord: number): fc.Arbitrary<Field> =>
-  fc
-    .record({
-      name: fc
-        .string({ minLength: 1, maxLength: 20 })
-        .filter(s => /^[a-zA-Z][a-zA-Z0-9_]*$/.test(s)),
-      sticky: fc.boolean(),
-      rtl: fc.boolean(),
-      font: fc.constant('Arial'),
-      size: fc.integer({ min: 10, max: 24 }),
-    })
-    .map(f => ({ ...f, ord }));
 
 /**
  * Arbitrary for generating unique field names
@@ -186,24 +168,6 @@ const noteArb = (noteTypeId: number, fieldCount: number): fc.Arbitrary<Note> =>
       tags,
       mod,
     }));
-
-/**
- * Arbitrary for generating a card
- */
-const cardArb = (noteId: number, deckId: number): fc.Arbitrary<Card> =>
-  fc
-    .record({
-      id: fc.integer({ min: 1, max: 1000000 }),
-      ord: fc.integer({ min: 0, max: 3 }),
-      type: fc.integer({ min: 0, max: 2 }),
-      queue: fc.integer({ min: -1, max: 3 }),
-      due: fc.integer({ min: 0, max: 1000000 }),
-      ivl: fc.integer({ min: 0, max: 365 }),
-      factor: fc.integer({ min: 1300, max: 3000 }),
-      reps: fc.integer({ min: 0, max: 100 }),
-      lapses: fc.integer({ min: 0, max: 50 }),
-    })
-    .map(c => ({ ...c, noteId, deckId }));
 
 /**
  * Arbitrary for generating a deck

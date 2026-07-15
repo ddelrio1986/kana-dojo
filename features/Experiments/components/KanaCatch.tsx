@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import clsx from 'clsx';
 import { allKana } from '../data/kanaData';
 
 /**

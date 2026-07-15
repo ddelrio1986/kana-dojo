@@ -8,7 +8,7 @@ import {
   enrichCategoriesWithCounts,
   getTotalResourceCount,
   validateCategoryCounts,
-} from '../lib/counts';
+} from '../lib';
 import {
   CATEGORY_IDS,
   DIFFICULTY_LEVELS,

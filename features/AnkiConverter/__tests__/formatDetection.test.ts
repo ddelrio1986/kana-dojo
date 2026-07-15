@@ -17,7 +17,7 @@ import {
   isSupportedFormat,
   getSupportedExtensions,
   getAcceptString,
-} from '../lib/formatDetection';
+} from '../lib';
 import type { SupportedFormat } from '../types';
 
 // Magic bytes for test data generation

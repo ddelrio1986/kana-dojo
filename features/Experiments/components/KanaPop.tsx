@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClick, useCorrect } from '@/shared/hooks/generic/useAudio';
+import { useCorrect } from '@/shared/hooks/generic/useAudio';
 import { allKana } from '../data/kanaData';
 import clsx from 'clsx';
 import { Sparkles } from 'lucide-react';
@@ -29,7 +29,7 @@ export default function KanaPop() {
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [score, setScore] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
-  const { playClick } = useClick();
+
   const { playCorrect } = useCorrect();
   const idCounter = useRef(0);
 

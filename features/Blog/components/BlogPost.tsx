@@ -6,35 +6,13 @@ import {
   formatLastUpdated,
   getFreshnessBadge,
 } from '@/shared/utils/content-freshness';
-import type {
-  BlogPost as BlogPostType,
-  BlogPostMeta,
-  Category,
-} from '../types/blog';
+import type { BlogPost as BlogPostType, BlogPostMeta } from '../types/blog';
 import { TableOfContents } from './TableOfContents';
 import { RelatedPosts } from './RelatedPosts';
 import { mdxComponents } from './mdx';
-import { ActionButton } from '@/shared/ui/components/ActionButton';
 import { Link } from '@/core/i18n/routing';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { useClick } from '@/shared/hooks/generic/useAudio';
-
-/**
- * Category badge color mappings
- */
-const categoryColors: Record<Category, string> = {
-  hiragana: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
-  katakana: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  kanji: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  vocabulary: 'bg-green-500/20 text-green-400 border-green-500/30',
-  grammar: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  culture: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  comparison: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-  tutorial: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
-  resources: 'bg-teal-500/20 text-teal-400 border-teal-500/30',
-  'study-tips': 'bg-lime-500/20 text-lime-400 border-lime-500/30',
-  jlpt: 'bg-red-500/20 text-red-400 border-red-500/30',
-};
 
 interface BlogPostProps {
   /** Full blog post data including content and headings */
@@ -247,4 +225,3 @@ export function BlogPost({
 export { mdxComponents };
 
 export default BlogPost;
-

@@ -1,6 +1,6 @@
 import type { IKanjiObj } from '@/entities/kanji';
 import { shuffle } from '@/shared/utils/shuffle';
-import type { ContentAdapter, GameMode } from './ContentAdapter';
+import type { ContentAdapter, GameMode } from '@/widgets';
 
 /**
  * Kanji Content Adapter
@@ -56,4 +56,3 @@ export const kanjiAdapter: ContentAdapter<IKanjiObj> = {
     };
   },
 };
-

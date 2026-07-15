@@ -16,8 +16,7 @@ import {
   stripHtmlTags,
   cleanWhitespace,
   containsMediaReferences,
-  containsHtmlTags,
-} from '../lib/textExtractor';
+} from '../lib';
 
 /**
  * Arbitrary for generating random media tags

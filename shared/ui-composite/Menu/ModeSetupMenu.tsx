@@ -1,5 +1,12 @@
 'use client';
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import { useKanaSelection } from '@/features/Kana';
 import { useKanjiSelection } from '@/features/Kanji';
@@ -10,7 +17,6 @@ import {
   Keyboard,
   Play,
   ArrowLeft,
-  CheckCircle2,
   Zap,
   Swords,
   Shield,
@@ -29,7 +35,9 @@ import { SelectedLevelsCard } from '@/shared/ui-composite/Menu/SelectedLevelsCar
 
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 
-const Decorations = lazy(() => import('@/shared/ui-composite/Decorations/Decorations'));
+const Decorations = lazy(
+  () => import('@/shared/ui-composite/Decorations/Decorations'),
+);
 
 interface ModeSetupMenuProps {
   isOpen: boolean;
@@ -255,256 +263,255 @@ const ModeSetupMenu = ({
       <div className='h-full w-full overflow-x-hidden overflow-y-auto overscroll-y-contain'>
         <div className='mx-auto flex min-h-[100dvh] w-full max-w-lg flex-col justify-center p-4'>
           <div className='w-full space-y-4'>
-          {/* Header */}
-          <div className='space-y-3 text-center'>
-            <span className='motion-safe:animate-float mx-auto flex h-20 w-20 items-center justify-center rounded-4xl border-b-14 border-(--secondary-color-accent) bg-(--secondary-color) text-(--background-color) [--float-distance:-5px]'>
-              <ModeIcon size={40} className='fill-current' />
-            </span>
-            <h1 className='text-2xl font-bold text-(--main-color)'>
-              {dojoLabel}{' '}
-              {mode === 'blitz'
-                ? 'Blitz'
-                : mode === 'gauntlet'
-                  ? 'Gauntlet'
-                  : 'Classic'}
-            </h1>
-            <p className='text-(--secondary-color)'>
-              {mode === 'blitz'
-                ? 'Practice in a fast-paced, time-limited way'
-                : mode === 'gauntlet'
-                  ? 'Master every character. No random help.'
-                  : 'Practice in a classic, endless way'}
-            </p>
-          </div>
-
-          {/* Selected Levels */}
-          <SelectedLevelsCard
-            currentDojo={currentDojo}
-            fullLabel={kanaGroupNamesFull}
-            compactLabel={kanaGroupNamesCompact}
-            useTildeSeparator={USE_TILDE_SEPARATOR}
-          />
-
-          {mode !== 'gauntlet' && (
-            <GameModeCards
-              gameModes={gameModes}
-              selectedGameMode={selectedGameMode}
-              onSelect={selectedMode => {
-                setSelectedGameMode(selectedMode);
-              }}
-            />
-          )}
-
-          {mode === 'blitz' && (
-            <div className='space-y-3 rounded-lg bg-(--card-color) p-4'>
-              <p className='text-sm font-medium text-(--secondary-color)'>
-                Duration:
+            {/* Header */}
+            <div className='space-y-3 text-center'>
+              <span className='motion-safe:animate-float mx-auto flex h-20 w-20 items-center justify-center rounded-4xl border-b-14 border-(--secondary-color-accent) bg-(--secondary-color) text-(--background-color) [--float-distance:-5px]'>
+                <ModeIcon size={40} className='fill-current' />
+              </span>
+              <h1 className='text-2xl font-bold text-(--main-color)'>
+                {dojoLabel}{' '}
+                {mode === 'blitz'
+                  ? 'Blitz'
+                  : mode === 'gauntlet'
+                    ? 'Gauntlet'
+                    : 'Classic'}
+              </h1>
+              <p className='text-(--secondary-color)'>
+                {mode === 'blitz'
+                  ? 'Practice in a fast-paced, time-limited way'
+                  : mode === 'gauntlet'
+                    ? 'Master every character. No random help.'
+                    : 'Practice in a classic, endless way'}
               </p>
-              <div className='flex flex-wrap justify-center gap-2'>
-                {DURATION_OPTIONS.map(duration => (
-                  <ActionButton
-                    key={duration}
-                    onClick={() => {
-                      playClick();
-                      setChallengeDuration(duration);
-                      persistDuration(duration);
-                    }}
-                    colorScheme={
-                      challengeDuration === duration ? 'main' : 'secondary'
-                    }
-                    borderColorScheme={
-                      challengeDuration === duration ? 'main' : 'secondary'
-                    }
-                    borderBottomThickness={8}
-                    borderRadius='3xl'
-                    className={clsx(
-                      'w-auto px-4 py-2',
-                      challengeDuration !== duration && 'opacity-60',
-                    )}
-                  >
-                    {duration < 60 ? `${duration}s` : `${duration / 60}m`}
-                  </ActionButton>
-                ))}
-              </div>
             </div>
-          )}
 
-          {mode === 'gauntlet' && (
-            <>
-              <div className='space-y-3'>
-                <h3 className='text-sm text-(--main-color)'>Difficulty</h3>
-                <div className='mx-auto w-full rounded-2xl border-1 border-(--border-color) bg-(--background-color) p-1 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl'>
-                  <div
-                    className={clsx(
-                      'flex w-full gap-0 bg-(--card-color)',
-                      USE_FLUSH_DIFFICULTY_TABS
-                        ? 'rounded-[22px] p-0'
-                        : 'rounded-[22px] p-1.5',
-                    )}
-                  >
-                    {(
-                      Object.entries(DIFFICULTY_CONFIG) as [
-                        GauntletDifficulty,
-                        (typeof DIFFICULTY_CONFIG)[GauntletDifficulty],
-                      ][]
-                    ).map(([key, config]) => {
-                      const isSelected = key === gauntletDifficulty;
-                      return (
-                        <div key={key} className='relative flex-1'>
-                          {isSelected && (
-                            <motion.div
-                              layoutId='activeDifficultyTab'
-                              className={clsx(
-                                'absolute inset-0 border-b-10 border-(--main-color-accent) bg-(--main-color)',
-                                USE_FLUSH_DIFFICULTY_TABS
-                                  ? 'rounded-[22px]'
-                                  : 'rounded-2xl',
-                              )}
-                              transition={{
-                                type: 'spring',
-                                stiffness: 300,
-                                damping: 30,
-                              }}
-                            />
-                          )}
-                          <button
-                            onClick={() => {
-                              playClick();
-                              setGauntletDifficulty(key);
-                              gauntletSettings.setDifficulty(dojoType, key);
-                            }}
-                            className={clsx(
-                              'relative z-10 flex w-full cursor-pointer items-center justify-center gap-1.5 px-4 pt-3 pb-5 text-sm font-semibold transition-colors duration-300',
-                              USE_FLUSH_DIFFICULTY_TABS
-                                ? 'rounded-[22px]'
-                                : 'rounded-2xl',
-                              isSelected
-                                ? 'text-(--background-color)'
-                                : 'bg-transparent text-(--secondary-color) hover:text-(--main-color)',
-                            )}
-                          >
-                            {difficultyIcons[key]}
-                            <span>{config.label}</span>
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <p className='text-center text-xs text-(--secondary-color)'>
-                  {DIFFICULTY_CONFIG[gauntletDifficulty].description}
-                </p>
-              </div>
+            {/* Selected Levels */}
+            <SelectedLevelsCard
+              currentDojo={currentDojo}
+              fullLabel={kanaGroupNamesFull}
+              compactLabel={kanaGroupNamesCompact}
+              useTildeSeparator={USE_TILDE_SEPARATOR}
+            />
 
+            {mode !== 'gauntlet' && (
               <GameModeCards
                 gameModes={gameModes}
                 selectedGameMode={selectedGameMode}
                 onSelect={selectedMode => {
                   setSelectedGameMode(selectedMode);
-                  gauntletSettings.setGameMode(dojoType, selectedMode);
                 }}
               />
+            )}
 
-              <div className='space-y-3 rounded-2xl bg-(--card-color) p-4'>
-                <p className='text-sm font-medium text-(--main-color)'>
-                  Repetitions per character:
+            {mode === 'blitz' && (
+              <div className='space-y-3 rounded-lg bg-(--card-color) p-4'>
+                <p className='text-sm font-medium text-(--secondary-color)'>
+                  Duration:
                 </p>
                 <div className='flex flex-wrap justify-center gap-2'>
-                  {REPETITION_OPTIONS.map(rep => (
+                  {DURATION_OPTIONS.map(duration => (
                     <ActionButton
-                      key={rep}
+                      key={duration}
                       onClick={() => {
                         playClick();
-                        setGauntletRepetitions(rep);
-                        gauntletSettings.setRepetitions(
-                          dojoType,
-                          rep,
-                        );
+                        setChallengeDuration(duration);
+                        persistDuration(duration);
                       }}
-                      colorScheme={gauntletRepetitions === rep ? 'main' : 'secondary'}
-                      borderColorScheme={
-                        gauntletRepetitions === rep ? 'main' : 'secondary'
+                      colorScheme={
+                        challengeDuration === duration ? 'main' : 'secondary'
                       }
-                      borderBottomThickness={10}
+                      borderColorScheme={
+                        challengeDuration === duration ? 'main' : 'secondary'
+                      }
+                      borderBottomThickness={8}
                       borderRadius='3xl'
                       className={clsx(
                         'w-auto px-4 py-2',
-                        gauntletRepetitions !== rep && 'opacity-60',
+                        challengeDuration !== duration && 'opacity-60',
                       )}
                     >
-                      {rep}×
+                      {duration < 60 ? `${duration}s` : `${duration / 60}m`}
                     </ActionButton>
                   ))}
                 </div>
               </div>
-            </>
-          )}
+            )}
+
+            {mode === 'gauntlet' && (
+              <>
+                <div className='space-y-3'>
+                  <h3 className='text-sm text-(--main-color)'>Difficulty</h3>
+                  <div className='mx-auto w-full rounded-2xl border-1 border-(--border-color) bg-(--background-color) p-1 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl'>
+                    <div
+                      className={clsx(
+                        'flex w-full gap-0 bg-(--card-color)',
+                        USE_FLUSH_DIFFICULTY_TABS
+                          ? 'rounded-[22px] p-0'
+                          : 'rounded-[22px] p-1.5',
+                      )}
+                    >
+                      {(
+                        Object.entries(DIFFICULTY_CONFIG) as [
+                          GauntletDifficulty,
+                          (typeof DIFFICULTY_CONFIG)[GauntletDifficulty],
+                        ][]
+                      ).map(([key, config]) => {
+                        const isSelected = key === gauntletDifficulty;
+                        return (
+                          <div key={key} className='relative flex-1'>
+                            {isSelected && (
+                              <motion.div
+                                layoutId='activeDifficultyTab'
+                                className={clsx(
+                                  'absolute inset-0 border-b-10 border-(--main-color-accent) bg-(--main-color)',
+                                  USE_FLUSH_DIFFICULTY_TABS
+                                    ? 'rounded-[22px]'
+                                    : 'rounded-2xl',
+                                )}
+                                transition={{
+                                  type: 'spring',
+                                  stiffness: 300,
+                                  damping: 30,
+                                }}
+                              />
+                            )}
+                            <button
+                              onClick={() => {
+                                playClick();
+                                setGauntletDifficulty(key);
+                                gauntletSettings.setDifficulty(dojoType, key);
+                              }}
+                              className={clsx(
+                                'relative z-10 flex w-full cursor-pointer items-center justify-center gap-1.5 px-4 pt-3 pb-5 text-sm font-semibold transition-colors duration-300',
+                                USE_FLUSH_DIFFICULTY_TABS
+                                  ? 'rounded-[22px]'
+                                  : 'rounded-2xl',
+                                isSelected
+                                  ? 'text-(--background-color)'
+                                  : 'bg-transparent text-(--secondary-color) hover:text-(--main-color)',
+                              )}
+                            >
+                              {difficultyIcons[key]}
+                              <span>{config.label}</span>
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <p className='text-center text-xs text-(--secondary-color)'>
+                    {DIFFICULTY_CONFIG[gauntletDifficulty].description}
+                  </p>
+                </div>
+
+                <GameModeCards
+                  gameModes={gameModes}
+                  selectedGameMode={selectedGameMode}
+                  onSelect={selectedMode => {
+                    setSelectedGameMode(selectedMode);
+                    gauntletSettings.setGameMode(dojoType, selectedMode);
+                  }}
+                />
+
+                <div className='space-y-3 rounded-2xl bg-(--card-color) p-4'>
+                  <p className='text-sm font-medium text-(--main-color)'>
+                    Repetitions per character:
+                  </p>
+                  <div className='flex flex-wrap justify-center gap-2'>
+                    {REPETITION_OPTIONS.map(rep => (
+                      <ActionButton
+                        key={rep}
+                        onClick={() => {
+                          playClick();
+                          setGauntletRepetitions(rep);
+                          gauntletSettings.setRepetitions(dojoType, rep);
+                        }}
+                        colorScheme={
+                          gauntletRepetitions === rep ? 'main' : 'secondary'
+                        }
+                        borderColorScheme={
+                          gauntletRepetitions === rep ? 'main' : 'secondary'
+                        }
+                        borderBottomThickness={10}
+                        borderRadius='3xl'
+                        className={clsx(
+                          'w-auto px-4 py-2',
+                          gauntletRepetitions !== rep && 'opacity-60',
+                        )}
+                      >
+                        {rep}×
+                      </ActionButton>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
 
             {/* Action Buttons */}
             <div className='mx-auto flex w-full max-w-4xl flex-row items-center justify-center gap-2 md:gap-4'>
-            <button
-              className={clsx(
-                'flex w-1/2 flex-row items-center justify-center gap-2 px-2 py-3 sm:px-6',
-                'bg-(--secondary-color) text-(--background-color)',
-                'rounded-3xl transition-colors duration-200',
-                'border-b-10 border-(--secondary-color-accent)',
-                'hover:cursor-pointer',
-              )}
-              onClick={() => {
-                playClick();
-                onClose();
-              }}
-            >
-              <ArrowLeft size={20} />
-              <span className='whitespace-nowrap'>Back</span>
-            </button>
-
-            {/* Start Button */}
-            <Link
-              href={
-                mode === 'blitz'
-                  ? `/${currentDojo}/blitz`
-                  : mode === 'gauntlet'
-                    ? `/${currentDojo}/gauntlet`
-                    : `/${currentDojo}/train`
-              }
-              className='w-1/2'
-              onClick={e => {
-                if (!selectedGameMode) {
-                  e.preventDefault();
-                  return;
-                }
-                playClick();
-                if (mode === 'blitz') {
-                  persistDuration(challengeDuration);
-                }
-              }}
-            >
               <button
-                disabled={!selectedGameMode}
                 className={clsx(
-                  'flex w-full flex-row items-center justify-center gap-2 px-2 py-3 sm:px-6',
+                  'flex w-1/2 flex-row items-center justify-center gap-2 px-2 py-3 sm:px-6',
+                  'bg-(--secondary-color) text-(--background-color)',
                   'rounded-3xl transition-colors duration-200',
-                  'border-b-10',
+                  'border-b-10 border-(--secondary-color-accent)',
                   'hover:cursor-pointer',
-                  selectedGameMode
-                    ? 'border-(--main-color-accent) bg-(--main-color) text-(--background-color)'
-                    : 'cursor-not-allowed bg-(--card-color) text-(--border-color)',
                 )}
+                onClick={() => {
+                  playClick();
+                  onClose();
+                }}
               >
-                <Play
-                  className={clsx(selectedGameMode && 'fill-current')}
-                  size={20}
-                />
-                <span className='whitespace-nowrap'>
-                  {mode === 'blitz'
-                    ? 'Start Blitz'
-                    : mode === 'gauntlet'
-                      ? 'Start Gauntlet'
-                      : 'Go'}
-                </span>
+                <ArrowLeft size={20} />
+                <span className='whitespace-nowrap'>Back</span>
               </button>
-            </Link>
+
+              {/* Start Button */}
+              <Link
+                href={
+                  mode === 'blitz'
+                    ? `/${currentDojo}/blitz`
+                    : mode === 'gauntlet'
+                      ? `/${currentDojo}/gauntlet`
+                      : `/${currentDojo}/train`
+                }
+                className='w-1/2'
+                onClick={e => {
+                  if (!selectedGameMode) {
+                    e.preventDefault();
+                    return;
+                  }
+                  playClick();
+                  if (mode === 'blitz') {
+                    persistDuration(challengeDuration);
+                  }
+                }}
+              >
+                <button
+                  disabled={!selectedGameMode}
+                  className={clsx(
+                    'flex w-full flex-row items-center justify-center gap-2 px-2 py-3 sm:px-6',
+                    'rounded-3xl transition-colors duration-200',
+                    'border-b-10',
+                    'hover:cursor-pointer',
+                    selectedGameMode
+                      ? 'border-(--main-color-accent) bg-(--main-color) text-(--background-color)'
+                      : 'cursor-not-allowed bg-(--card-color) text-(--border-color)',
+                  )}
+                >
+                  <Play
+                    className={clsx(selectedGameMode && 'fill-current')}
+                    size={20}
+                  />
+                  <span className='whitespace-nowrap'>
+                    {mode === 'blitz'
+                      ? 'Start Blitz'
+                      : mode === 'gauntlet'
+                        ? 'Start Gauntlet'
+                        : 'Go'}
+                  </span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -561,7 +568,9 @@ function GameModeCards({
                     : 'bg-(--border-color) text-(--muted-color)'),
               )}
             >
-              <Icon size={USE_NEW_GAME_MODE_ICON_STYLE ? GAME_MODE_ICON_SIZE : 24} />
+              <Icon
+                size={USE_NEW_GAME_MODE_ICON_STYLE ? GAME_MODE_ICON_SIZE : 24}
+              />
             </div>
             <div className='min-w-0 flex-1'>
               <h3 className='text-lg font-medium text-(--main-color)'>
@@ -603,4 +612,3 @@ function GameModeCards({
 }
 
 export default ModeSetupMenu;
-

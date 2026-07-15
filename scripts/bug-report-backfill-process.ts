@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   loadPendingBackfillReportIds,
   resetStaleProcessingReports,
@@ -58,7 +57,7 @@ function validatePositiveInteger(name: string, value: number | undefined) {
 }
 
 async function sleep(ms: number) {
-  await new Promise((resolve) => {
+  await new Promise(resolve => {
     setTimeout(resolve, ms);
   });
 }
@@ -83,7 +82,9 @@ async function main() {
   }
 
   const reportIds = await loadPendingBackfillReportIds({ limit: args.limit });
-  console.log(`[bug-report-backfill] Pending reports selected: ${reportIds.length}`);
+  console.log(
+    `[bug-report-backfill] Pending reports selected: ${reportIds.length}`,
+  );
 
   if (args.dryRun) {
     for (const reportId of reportIds) {
@@ -124,7 +125,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('[bug-report-backfill] failed', error);
   process.exit(1);
 });

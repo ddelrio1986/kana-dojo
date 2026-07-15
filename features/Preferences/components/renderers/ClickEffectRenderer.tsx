@@ -61,7 +61,9 @@ export default function ClickEffectRenderer() {
     // ── Spawn burst ───────────────────────────────────────────────────────────
     const BURST_COUNT = 10;
     // Coarse-pointer (touch) devices get a lower cap to stay within mobile GPU budget
-    const MAX_PARTICLES = window.matchMedia('(pointer: coarse)').matches ? 100 : 150;
+    const MAX_PARTICLES = window.matchMedia('(pointer: coarse)').matches
+      ? 100
+      : 150;
 
     const spawnAt = (x: number, y: number) => {
       const bmp = getEmojiBitmap(emoji, 48);
@@ -152,13 +154,14 @@ export default function ClickEffectRenderer() {
       }
     };
 
+    const particlesCurrent = particles.current;
     return () => {
       mountedRef.current = false;
       window.removeEventListener('click', onClick);
       window.removeEventListener('touchstart', onTouch);
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(rafRef.current);
-      particles.current.length = 0;
+      particlesCurrent.length = 0;
       hasParticles.current = false;
     };
   }, [effectId]);

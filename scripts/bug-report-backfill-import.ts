@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   importBackfillReports,
   parseTallyBackfillExportFile,
@@ -54,7 +53,10 @@ async function main() {
     process.exit(1);
   }
 
-  if (args.limit !== undefined && (!Number.isInteger(args.limit) || args.limit < 1)) {
+  if (
+    args.limit !== undefined &&
+    (!Number.isInteger(args.limit) || args.limit < 1)
+  ) {
     console.error('--limit must be a positive integer');
     process.exit(1);
   }
@@ -100,7 +102,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('[bug-report-backfill] failed', error);
   process.exit(1);
 });

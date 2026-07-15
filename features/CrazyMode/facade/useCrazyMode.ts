@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import useCrazyModeStore, { KYOKI_THEME_ID } from '../store/useCrazyModeStore';
-import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
+import { useThemePreferences } from '@/features/Preferences';
 
 export { KYOKI_THEME_ID };
 
@@ -18,7 +18,7 @@ export interface CrazyModeActions {
 
 export function useCrazyMode(): CrazyModeState & CrazyModeActions {
   // Crazy mode is now derived from whether the kyoki theme is selected
-  const selectedTheme = usePreferencesStore(state => state.theme);
+  const { theme: selectedTheme } = useThemePreferences();
   const isCrazyMode = selectedTheme === KYOKI_THEME_ID;
 
   const activeThemeId = useCrazyModeStore(state => state.activeThemeId);
@@ -30,8 +30,8 @@ export function useCrazyMode(): CrazyModeState & CrazyModeActions {
       isCrazyMode,
       activeThemeId,
       activeFontName,
-      randomize
+      randomize,
     }),
-    [isCrazyMode, activeThemeId, activeFontName, randomize]
+    [isCrazyMode, activeThemeId, activeFontName, randomize],
   );
 }

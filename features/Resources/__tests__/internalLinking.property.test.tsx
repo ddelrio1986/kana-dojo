@@ -11,10 +11,7 @@ import React from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 import * as fc from 'fast-check';
 import { render, cleanup } from '@testing-library/react';
-import {
-  RelatedCategories,
-  getRelatedCategories,
-} from '../components/RelatedCategories';
+import { RelatedCategories, getRelatedCategories } from '../components';
 import {
   CATEGORY_IDS,
   type Category,
@@ -51,19 +48,18 @@ const categoryArb: fc.Arbitrary<Category> = fc.record({
 });
 
 // Generate a category with count
-const categoryWithCountArb: fc.Arbitrary<CategoryWithCount> = categoryArb.chain(
-  category =>
-    fc
-      .record({
-        ...Object.fromEntries(
-          Object.entries(category).map(([k, v]) => [k, fc.constant(v)]),
-        ),
-        resourceCount: fc.integer({ min: 0, max: 500 }),
-        subcategoriesWithCount: fc.constant(
-          [] as CategoryWithCount['subcategoriesWithCount'],
-        ),
-      })
-      .map(obj => obj as unknown as CategoryWithCount),
+categoryArb.chain(category =>
+  fc
+    .record({
+      ...Object.fromEntries(
+        Object.entries(category).map(([k, v]) => [k, fc.constant(v)]),
+      ),
+      resourceCount: fc.integer({ min: 0, max: 500 }),
+      subcategoriesWithCount: fc.constant(
+        [] as CategoryWithCount['subcategoriesWithCount'],
+      ),
+    })
+    .map(obj => obj as unknown as CategoryWithCount),
 );
 
 // Generate a list of all categories with counts (one for each category ID)

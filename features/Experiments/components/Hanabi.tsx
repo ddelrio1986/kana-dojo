@@ -1,9 +1,8 @@
 'use client';
 import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClick, useCorrect } from '@/shared/hooks/generic/useAudio';
+import { useCorrect } from '@/shared/hooks/generic/useAudio';
 import { allKana } from '../data/kanaData';
-import clsx from 'clsx';
 import { Sparkles, Moon } from 'lucide-react';
 
 interface Firework {
@@ -12,6 +11,15 @@ interface Firework {
   y: number;
   kana: string;
   color: string;
+}
+
+// Added type for stable star parameters
+interface Star {
+  id: number;
+  size: number;
+  top: number;
+  left: number;
+  delay: number;
 }
 
 const COLORS = [
@@ -25,7 +33,18 @@ const COLORS = [
 
 export default function Hanabi() {
   const [fireworks, setFireworks] = useState<Firework[]>([]);
-  const { playClick } = useClick();
+
+  // 1. Initialize stars with random values ONCE on mount (Pure & React-friendly)
+  const [stars] = useState<Star[]>(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      size: Math.random() * 3,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      delay: Math.random() * 5,
+    })),
+  );
+
   const { playCorrect } = useCorrect();
   const idCounter = useRef(0);
 
@@ -40,7 +59,6 @@ export default function Hanabi() {
         clientY = e.clientY;
       }
 
-      // Get container bounds
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
       const x = clientX - rect.left;
       const y = clientY - rect.top;
@@ -57,7 +75,6 @@ export default function Hanabi() {
 
       setFireworks(prev => [...prev, newFirework]);
 
-      // Remove after animation
       setTimeout(() => {
         setFireworks(prev => prev.filter(f => f.id !== newFirework.id));
       }, 1500);
@@ -76,16 +93,17 @@ export default function Hanabi() {
         <div className='absolute top-20 right-20 text-white/20'>
           <Moon size={80} strokeWidth={1} />
         </div>
-        {[...Array(20)].map((_, i) => (
+        {/* 2. Render from our stable star state */}
+        {stars.map(star => (
           <div
-            key={i}
+            key={star.id}
             className='absolute animate-pulse rounded-full bg-white'
             style={{
-              width: Math.random() * 3,
-              height: Math.random() * 3,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
+              width: star.size,
+              height: star.size,
+              top: `${star.top}%`,
+              left: `${star.left}%`,
+              animationDelay: `${star.delay}s`,
             }}
           />
         ))}
@@ -118,7 +136,6 @@ export default function Hanabi() {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            {/* Exploding particles (simplified visual) */}
             <div className='relative'>
               <span
                 className='text-6xl font-bold'

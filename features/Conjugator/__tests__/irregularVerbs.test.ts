@@ -7,14 +7,14 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { classifyVerb } from '../lib/engine/classifyVerb';
+import { classifyVerb } from '../lib/engine';
 import {
   conjugateIrregular,
   getAruNegative,
   getIkuTeForm,
   getHonorificMasuStem,
   isHonorificVerb,
-} from '../lib/engine/conjugateIrregular';
+} from '../lib/engine';
 
 // ============================================================================
 // Helper Functions

@@ -9,7 +9,7 @@
 
 import { describe, it, expect, beforeAll, vi } from 'vitest';
 import fc from 'fast-check';
-import initSqlJs, { type Database, type SqlJsStatic } from 'sql.js';
+import initSqlJs, { type SqlJsStatic } from 'sql.js';
 import path from 'path';
 import {
   parseSQLite,
@@ -22,8 +22,8 @@ import {
   extractMetadata,
   getCardCount,
   validateAnkiDatabase,
-} from '../parsers/sqliteParser';
-import { ConversionError, ErrorCode } from '../types';
+} from '../parsers';
+import { ConversionError } from '../types';
 
 // sql.js instance
 let SQL: SqlJsStatic;

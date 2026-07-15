@@ -8,7 +8,7 @@ import {
   filterByPriceType,
   filterByPlatform,
   combineFilters,
-} from '../lib/filters';
+} from '../lib';
 import {
   CATEGORY_IDS,
   DIFFICULTY_LEVELS,

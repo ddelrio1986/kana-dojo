@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import clsx from 'clsx';
 import { allKana } from '../data/kanaData';
 
@@ -10,6 +10,7 @@ import { allKana } from '../data/kanaData';
 const KanaSlot = () => {
   const [reels, setReels] = useState([0, 0, 0]);
   const [spinning, setSpinning] = useState([false, false, false]);
+  const [flicker, setFlicker] = useState([0, 0, 0]);
   const [coins, setCoins] = useState(100);
   const [message, setMessage] = useState('');
   const [win, setWin] = useState(false);
@@ -23,6 +24,11 @@ const KanaSlot = () => {
     setMessage('');
     setWin(false);
     setSpinning([true, true, true]);
+    setFlicker([
+      Math.floor(Math.random() * slotKana.length),
+      Math.floor(Math.random() * slotKana.length),
+      Math.floor(Math.random() * slotKana.length),
+    ]);
 
     // Determine final positions
     const finals = [
@@ -45,6 +51,11 @@ const KanaSlot = () => {
             newSpinning[i] = false;
             return newSpinning;
           });
+          setFlicker([
+            Math.floor(Math.random() * slotKana.length),
+            Math.floor(Math.random() * slotKana.length),
+            Math.floor(Math.random() * slotKana.length),
+          ]);
 
           // Check win on last reel
           if (i === 2) {
@@ -77,9 +88,7 @@ const KanaSlot = () => {
       <h2 className='text-2xl text-(--main-color)'>🎰 Kana Slot</h2>
 
       {/* Coins */}
-      <div className='text-xl text-(--accent-color)'>
-        💰 Coins: {coins}
-      </div>
+      <div className='text-xl text-(--accent-color)'>💰 Coins: {coins}</div>
 
       {/* Slot Machine */}
       <div className='flex gap-2 rounded-2xl border-4 border-(--border-color) bg-(--card-color) p-4'>
@@ -99,9 +108,7 @@ const KanaSlot = () => {
                 spinning[i] && 'animate-spin-slot',
               )}
             >
-              {spinning[i]
-                ? slotKana[Math.floor(Math.random() * slotKana.length)].kana
-                : slotKana[reel].kana}
+              {spinning[i] ? slotKana[flicker[i]].kana : slotKana[reel].kana}
             </span>
           </div>
         ))}
@@ -155,9 +162,6 @@ const KanaSlot = () => {
             transform: translateY(-50%);
             opacity: 0.5;
           }
-        }
-        .animate-spin-slot {
-          animation: spin-slot 0.1s linear infinite;
         }
       `}</style>
     </div>

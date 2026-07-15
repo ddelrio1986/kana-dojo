@@ -5,7 +5,11 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from '@/core/i18n/routing';
 import { useChallengeTimer } from '@/shared/hooks/game/useChallengeTimer';
 import { useGoalTimers } from '@/shared/hooks/game/useGoalTimers';
-import { useClick, useCorrect, useError } from '@/shared/hooks/generic/useAudio';
+import {
+  useClick,
+  useCorrect,
+  useError,
+} from '@/shared/hooks/generic/useAudio';
 import { shuffle } from '@/shared/utils/shuffle';
 import confetti from 'canvas-confetti';
 import { statsTracking } from '@/features/Progress';
@@ -131,10 +135,13 @@ export default function Blitz<T>({ config }: BlitzProps<T>) {
 
   // Refs for stable callbacks
   const generateQuestionRef = useRef(generateQuestion);
-  generateQuestionRef.current = generateQuestion;
-
   const generateOptionsRef = useRef(generateOptions);
-  generateOptionsRef.current = generateOptions;
+
+  // SAFE MUTATION: Synchronize callbacks to refs inside an effect after rendering has committed
+  useEffect(() => {
+    generateQuestionRef.current = generateQuestion;
+    generateOptionsRef.current = generateOptions;
+  }, [generateQuestion, generateOptions]);
 
   // Initialize question
   useEffect(() => {
@@ -279,7 +286,7 @@ export default function Blitz<T>({ config }: BlitzProps<T>) {
 
   // Track challenge mode usage on mount
   useEffect(() => {
-    // Track challenge mode usage for achievements (Requirements 8.1-8.3)
+    // Track challenge mode usage for achievements
     statsTracking.recordChallengeModeUsed('blitz');
     statsTracking.recordDojoUsed(dojoType);
   }, [dojoType]);
@@ -294,7 +301,9 @@ export default function Blitz<T>({ config }: BlitzProps<T>) {
   const toQuestionPrompt = useCallback(
     (question: T) => {
       const rendered = renderQuestion(question, isReverseActive);
-      return typeof rendered === 'string' ? rendered : getCorrectAnswer(question);
+      return typeof rendered === 'string'
+        ? rendered
+        : getCorrectAnswer(question);
     },
     [renderQuestion, getCorrectAnswer, isReverseActive],
   );
@@ -333,7 +342,18 @@ export default function Blitz<T>({ config }: BlitzProps<T>) {
         });
       }
     }, 100);
-  }, [items, gameMode, dojoType, pathname, selectedSets, goalTimers, playClick, resetTimer, startTimer, stats]);
+  }, [
+    items,
+    gameMode,
+    dojoType,
+    pathname,
+    selectedSets,
+    goalTimers,
+    playClick,
+    resetTimer,
+    startTimer,
+    stats,
+  ]);
 
   const handleCancel = async () => {
     playClick();
@@ -524,4 +544,3 @@ export default function Blitz<T>({ config }: BlitzProps<T>) {
     />
   );
 }
-

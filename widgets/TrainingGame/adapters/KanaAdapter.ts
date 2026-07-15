@@ -1,6 +1,6 @@
 import type { KanaCharacter } from '@/entities/kana';
 import { shuffle } from '@/shared/utils/shuffle';
-import type { ContentAdapter, GameMode } from './ContentAdapter';
+import type { ContentAdapter, GameMode } from '@/widgets';
 
 /**
  * Kana Content Adapter
@@ -54,4 +54,3 @@ export const kanaAdapter: ContentAdapter<KanaCharacter> = {
     };
   },
 };
-

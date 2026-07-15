@@ -1,7 +1,4 @@
-/* eslint-disable no-console */
-import {
-  parseTallyBackfillExportFile,
-} from '@/shared/infra/server/bugReports/backfill';
+import { parseTallyBackfillExportFile } from '@/shared/infra/server/bugReports/backfill';
 import {
   copyAttachmentsToSupabase,
   createSignedUrl,
@@ -27,7 +24,9 @@ function readArgs(): Args {
 }
 
 function replaceAttachmentSection(body: string, links: string[]): string {
-  const section = links.length ? links.map((link) => `- ${link}`).join('\n') : 'None.';
+  const section = links.length
+    ? links.map(link => `- ${link}`).join('\n')
+    : 'None.';
   return body.replace(
     /## Attachments\n\n[\s\S]*?(?=\n## Triage Notes)/,
     `## Attachments\n\n${section}`,
@@ -38,12 +37,14 @@ async function main() {
   const args = readArgs();
   const parsed = await parseTallyBackfillExportFile(args.file);
   const bySubmissionId = new Map(
-    parsed.reports.map((report) => [report.sourceSubmissionId, report]),
+    parsed.reports.map(report => [report.sourceSubmissionId, report]),
   );
   const supabase = getSupabaseAdminClient();
   const { data: reports, error } = await supabase
     .from('bug_reports')
-    .select('id, source_submission_id, github_issue_number, status, normalized_payload')
+    .select(
+      'id, source_submission_id, github_issue_number, status, normalized_payload',
+    )
     .eq('source', 'tally')
     .eq('status', 'github_created')
     .not('github_issue_number', 'is', null);
@@ -89,8 +90,10 @@ async function main() {
 
       const links = (
         await Promise.all(
-          (stored || []).map(async (attachment) => {
-            const signedUrl = await createSignedUrl(attachment.storage_path as string);
+          (stored || []).map(async attachment => {
+            const signedUrl = await createSignedUrl(
+              attachment.storage_path as string,
+            );
             return signedUrl
               ? `[${attachment.original_name || 'Attachment'}](${signedUrl})`
               : null;
@@ -110,7 +113,10 @@ async function main() {
       console.log(`repaired issue #${report.github_issue_number}`);
     } catch (repairError) {
       failed += 1;
-      console.error(`failed issue #${report.github_issue_number}:`, repairError);
+      console.error(
+        `failed issue #${report.github_issue_number}:`,
+        repairError,
+      );
     }
   }
 
@@ -120,7 +126,7 @@ async function main() {
   if (failed > 0) process.exit(1);
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('[bug-report-attachment-repair] failed', error);
   process.exit(1);
 });

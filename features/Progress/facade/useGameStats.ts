@@ -79,7 +79,7 @@ export function useGameStats(): GameStatsActions {
       unsubIncorrect();
       unsubSession();
     };
-  }, [store]);
+  }, [checkForAchievementProgress, store]);
 
   return {
     recordCorrect: statsApi.recordCorrect,
