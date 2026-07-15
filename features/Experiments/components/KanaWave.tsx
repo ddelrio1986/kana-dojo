@@ -1,7 +1,11 @@
 'use client';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClick, useCorrect, useError } from '@/shared/hooks/generic/useAudio';
+import {
+  useClick,
+  useCorrect,
+  useError,
+} from '@/shared/hooks/generic/useAudio';
 import { allKana } from '../data/kanaData';
 import clsx from 'clsx';
 import { Music, Activity, Play } from 'lucide-react';
@@ -29,6 +33,7 @@ export default function KanaWave() {
   const idCounter = useRef(0);
   const requestRef = useRef<number>(null);
   const lastSpawnRef = useRef<number>(0);
+  const updateRef = useRef<(time: number) => void>(() => {});
 
   const spawnKana = useCallback(() => {
     const kanaObj = allKana[Math.floor(Math.random() * allKana.length)];
@@ -55,18 +60,22 @@ export default function KanaWave() {
           .filter(k => k.x > -10);
 
         // Check for misses (characters that passed the target line at x=15)
-        const missed = filtered.find(
-          k => k.x < 15 && k.x > 14 && k.lane === activeLane,
-        );
+        filtered.find(k => k.x < 15 && k.x > 14 && k.lane === activeLane);
         // Logic for hitting is in handleHit
 
         return filtered;
       });
 
-      requestRef.current = requestAnimationFrame(update);
+      requestRef.current = requestAnimationFrame(time =>
+        updateRef.current(time),
+      );
     },
     [spawnKana, activeLane],
   );
+
+  useEffect(() => {
+    updateRef.current = update;
+  }, [update]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -79,12 +88,15 @@ export default function KanaWave() {
     };
   }, [isPlaying, update]);
 
-  const handleLaneChange = (lane: number) => {
-    setActiveLane(lane);
-    playClick();
-  };
+  const handleLaneChange = useCallback(
+    (lane: number) => {
+      setActiveLane(lane);
+      playClick();
+    },
+    [playClick],
+  );
 
-  const checkHit = () => {
+  const checkHit = useCallback(() => {
     const targetRange = [10, 25]; // Range where it counts as a hit
     const hit = waveKanas.find(
       k =>
@@ -99,7 +111,7 @@ export default function KanaWave() {
       playError();
       setScore(s => Math.max(0, s - 50));
     }
-  };
+  }, [waveKanas, activeLane, playCorrect, playError]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -110,7 +122,7 @@ export default function KanaWave() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPlaying, activeLane, waveKanas]);
+  }, [isPlaying, activeLane, waveKanas, handleLaneChange, checkHit]);
 
   return (
     <div className='flex min-h-[85vh] flex-1 flex-col gap-8'>
@@ -163,7 +175,7 @@ export default function KanaWave() {
                 key={l}
                 className={clsx(
                   'relative flex flex-1 items-center border-b border-(--border-color)/30 transition-colors duration-300',
-                  activeLane === l ? 'bg-(--main-color)/[0.03]' : '',
+                  activeLane === l ? 'bg-(--main-color)/3' : '',
                 )}
                 onClick={() => handleLaneChange(l)}
               >
@@ -179,7 +191,7 @@ export default function KanaWave() {
           </div>
 
           {/* Target Zone */}
-          <div className='pointer-events-none absolute inset-y-0 left-[15%] w-20 border-l-2 border-dashed border-(--main-color)/40 bg-gradient-to-r from-(--main-color)/10 to-transparent' />
+          <div className='pointer-events-none absolute inset-y-0 left-[15%] w-20 border-l-2 border-dashed border-(--main-color)/40 bg-linear-to-r from-(--main-color)/10 to-transparent' />
 
           {/* Moving Kanas */}
           <AnimatePresence>

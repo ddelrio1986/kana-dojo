@@ -3,7 +3,6 @@ import { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useClick, useCorrect } from '@/shared/hooks/generic/useAudio';
 import { allKana } from '../data/kanaData';
-import clsx from 'clsx';
 import { TreePine, Droplet, Sun, Wind, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 

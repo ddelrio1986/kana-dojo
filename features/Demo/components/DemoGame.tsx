@@ -8,7 +8,11 @@ import {
 } from 'framer-motion';
 import clsx from 'clsx';
 import { Random } from 'random-js';
-import { useCorrect, useError, useClick } from '@/shared/hooks/generic/useAudio';
+import {
+  useCorrect,
+  useError,
+  useClick,
+} from '@/shared/hooks/generic/useAudio';
 import Stars from '@/shared/ui-composite/Game/Stars';
 import { useCrazyModeTrigger } from '@/features/CrazyMode/hooks/useCrazyModeTrigger';
 import { GameBottomBar } from '@/shared/ui-composite/Game/GameBottomBar';
@@ -357,10 +361,10 @@ const DemoGame = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 
   // Question type order: kanji only (kana temporarily disabled)
-  const questionTypes: QuestionType[] = ['kanji']; // 'kana' and 'vocab' commented out
+  // 'kana' and 'vocab' commented out
 
   // Generate a question based on the current type
-  const generateQuestion = useCallback((type: QuestionType): Question => {
+  const generateQuestion = useCallback((): Question => {
     // KANA TEMPORARILY DISABLED
     // if (type === 'kana') {
     //   const correctIndex = random.integer(0, DEMO_KANA.length - 1);
@@ -399,26 +403,25 @@ const DemoGame = () => {
 
   // Reset game with new question
   const resetGame = useCallback(() => {
-    const currentType = questionTypes[0]; // Always use kanji since kana is disabled
-    const newQuestion = generateQuestion(currentType);
+    const newQuestion = generateQuestion();
     setCurrentQuestion(newQuestion);
     setPlacedTiles([]);
     setIsChecking(false);
     setIsCelebrating(false);
     setBottomBarState('check');
-  }, [questionIndex, generateQuestion]);
+  }, [generateQuestion]);
 
   // Initialize first question
   useEffect(() => {
     resetGame();
-  }, []);
+  }, [resetGame]);
 
   // Update question when index changes
   useEffect(() => {
     if (questionIndex > 0) {
       resetGame();
     }
-  }, [questionIndex]);
+  }, [questionIndex, resetGame]);
 
   // Handle star increment when score reaches max
   useEffect(() => {

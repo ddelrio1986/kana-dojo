@@ -10,7 +10,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import initSqlJs, { type SqlJsStatic } from 'sql.js';
 import JSZip from 'jszip';
-import { parseTSV } from '../parsers/tsvParser';
+import { parseTSV } from '../parsers';
 import type {
   ParsedAnkiData,
   Note,

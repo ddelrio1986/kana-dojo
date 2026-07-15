@@ -9,8 +9,8 @@
 
 import { describe, it, expect } from 'vitest';
 import fc from 'fast-check';
-import { buildJson } from '../lib/jsonBuilder';
-import type { ParsedAnkiData, DeckInfo, NoteType } from '../types';
+import { buildJson } from '../lib';
+import type { ParsedAnkiData, DeckInfo } from '../types';
 
 /**
  * Create empty parsed data with various deck configurations

@@ -312,7 +312,6 @@ export function adjustLightness(
   let low = 0;
   let high = 1;
   let bestL = hsl.l;
-  let bestContrast = getContrastRatio(color, background);
 
   // Determine if we need to go lighter or darker
   const needsLighter = bgLuminance < 0.5;
@@ -325,7 +324,6 @@ export function adjustLightness(
 
     if (contrast >= targetContrast) {
       bestL = mid;
-      bestContrast = contrast;
 
       // Try to get closer to original lightness
       if (needsLighter) {
@@ -343,7 +341,7 @@ export function adjustLightness(
   }
 
   // If we couldn't achieve target, use the best we found
-  const finalRgb = hslToRgb({ h: hsl.h, s: hsl.s, l: bestL });
+  hslToRgb({ h: hsl.h, s: hsl.s, l: bestL });
   return `hsla(${Math.round(hsl.h)}, ${Math.round(hsl.s * 100)}%, ${Math.round(
     bestL * 100,
   )}%, 1)`;

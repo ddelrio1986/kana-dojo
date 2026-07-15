@@ -13,7 +13,7 @@ import {
   createErrorMessage,
   getErrorRecoveryGuidance,
   validateFileSize,
-} from '../lib/conversionPipeline';
+} from '../lib';
 import { ConversionError, ErrorCode } from '../types';
 import type { ProgressEvent } from '../types';
 
@@ -403,7 +403,7 @@ describe('Conversion Pipeline', () => {
       await fc.assert(
         fc.asyncProperty(
           fc.constantFrom(...unsupportedExtensions),
-          async ext => {
+          async () => {
             const pipeline = createConversionPipeline();
             // Random binary content that doesn't match any format
             const content = new Uint8Array([0xff, 0xfe, 0x00, 0x01, 0x02, 0x03])

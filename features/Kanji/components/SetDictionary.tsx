@@ -1,9 +1,11 @@
 'use client';
 
 import clsx from 'clsx';
-import { cardBorderStyles } from '@/shared/utils/styles';
 import type { IKanjiObj } from '@/features/Kanji/store/useKanjiStore';
-import { useAudioPreferences, useThemePreferences } from '@/features/Preferences';
+import {
+  useAudioPreferences,
+  useThemePreferences,
+} from '@/features/Preferences';
 import { useJapaneseTTS } from '@/features/Preferences/hooks/useJapaneseTTS';
 import FuriganaText from '@/shared/ui-composite/text/FuriganaText';
 import { useClick } from '@/shared/hooks/generic/useAudio';
@@ -112,7 +114,8 @@ const KanjiSetDictionary = memo(function KanjiSetDictionary({
                 )}
               >
                 {kanjiObj.onyomi.slice(0, 2).map((onyomiReading, i) => {
-                  const pronunciation = onyomiReading.split(' ')[1] || onyomiReading;
+                  const pronunciation =
+                    onyomiReading.split(' ')[1] || onyomiReading;
 
                   return (
                     <button
@@ -121,9 +124,7 @@ const KanjiSetDictionary = memo(function KanjiSetDictionary({
                       onClick={() => {
                         void playReadingPronunciation(pronunciation);
                       }}
-                      disabled={
-                        !pronunciationEnabled || !pronunciation.trim()
-                      }
+                      disabled={!pronunciationEnabled || !pronunciation.trim()}
                       className={clsx(
                         'group flex w-full flex-row items-center justify-center bg-transparent px-2 py-1.5 text-sm md:text-base',
                         'w-full text-(--secondary-color)',
@@ -186,7 +187,8 @@ const KanjiSetDictionary = memo(function KanjiSetDictionary({
                 )}
               >
                 {kanjiObj.kunyomi.slice(0, 2).map((kunyomiReading, i) => {
-                  const pronunciation = kunyomiReading.split(' ')[1] || kunyomiReading;
+                  const pronunciation =
+                    kunyomiReading.split(' ')[1] || kunyomiReading;
 
                   return (
                     <button
@@ -195,9 +197,7 @@ const KanjiSetDictionary = memo(function KanjiSetDictionary({
                       onClick={() => {
                         void playReadingPronunciation(pronunciation);
                       }}
-                      disabled={
-                        !pronunciationEnabled || !pronunciation.trim()
-                      }
+                      disabled={!pronunciationEnabled || !pronunciation.trim()}
                       className={clsx(
                         'group flex w-full flex-row items-center justify-center bg-transparent px-2 py-1.5 text-sm md:text-base',
                         'w-full text-(--secondary-color)',
@@ -246,5 +246,3 @@ const KanjiSetDictionary = memo(function KanjiSetDictionary({
 });
 
 export default KanjiSetDictionary;
-
-

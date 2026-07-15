@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useGameEngine } from './hooks/useGameEngine';
 import { statsApi } from '@/shared/events';
-import type { ContentAdapter, GameMode } from './adapters/ContentAdapter';
+import type { ContentAdapter, GameMode } from '@/widgets';
 
 export interface TrainingGameProps<T> {
   content: T[];

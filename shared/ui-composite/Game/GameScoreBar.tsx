@@ -42,7 +42,7 @@ GameScoreBarProps) => {
       setPrevScore(effectiveScore);
     }
   }, [effectiveScore, prevScore]);
-  
+
   const getBackground = () => {
     switch (colorCycle) {
       case 0:
@@ -72,7 +72,7 @@ GameScoreBarProps) => {
       const newIconIndex = random.integer(0, animalIconsLength - 1);
       addIconIndex(newIconIndex);
     }
-  }, [score, value]);
+  }, [score, value, addIconIndex, max, setScore, setStars, stars]);
 
   return (
     <div className='relative flex w-full flex-col items-center'>
@@ -83,8 +83,7 @@ GameScoreBarProps) => {
           className='relative z-10 h-4 rounded-full transition-all duration-500'
           style={{
             width: `${percentage}%`,
-            background:
-              getBackground(),
+            background: getBackground(),
           }}
         />
         {/* Checkpoints */}
@@ -103,4 +102,3 @@ GameScoreBarProps) => {
 };
 
 export default GameScoreBar;
-

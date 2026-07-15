@@ -12,7 +12,7 @@ import {
   sanitizeFilename,
   generateCollectionFilename,
   isValidFilename,
-} from '../lib/filenameSanitizer';
+} from '../lib';
 
 /**
  * Characters that are invalid in filenames across all major operating systems

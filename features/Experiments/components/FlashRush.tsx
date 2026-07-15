@@ -1,8 +1,12 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClick, useCorrect, useError } from '@/shared/hooks/generic/useAudio';
-import { allKana } from '../data/kanaData';
+import {
+  useClick,
+  useCorrect,
+  useError,
+} from '@/shared/hooks/generic/useAudio';
+import { allKana, type KanaEntry } from '../data/kanaData';
 import clsx from 'clsx';
 import { Timer, Zap, Trophy, RefreshCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -13,8 +17,8 @@ export default function FlashRush() {
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'result'>(
     'idle',
   );
-  const [currentKana, setCurrentKana] = useState<any>(null);
-  const [options, setOptions] = useState<any[]>([]);
+  const [currentKana, setCurrentKana] = useState<KanaEntry | null>(null);
+  const [options, setOptions] = useState<KanaEntry[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [lastResult, setLastResult] = useState<'correct' | 'wrong' | null>(
@@ -56,10 +60,10 @@ export default function FlashRush() {
     return () => clearInterval(timer);
   }, [gameState, timeLeft, score]);
 
-  const handleAnswer = (option: any) => {
+  const handleAnswer = (option: KanaEntry) => {
     if (gameState !== 'playing') return;
 
-    if (option.kana === currentKana.kana) {
+    if (option.kana === currentKana?.kana) {
       playCorrect();
       setScore(s => s + 1);
       setLastResult('correct');
@@ -107,16 +111,12 @@ export default function FlashRush() {
           className='flex flex-col items-center gap-4 text-center'
         >
           <Trophy className='text-yellow-400' size={80} />
-          <h2 className='text-4xl font-bold text-(--main-color)'>
-            Rush Over!
-          </h2>
+          <h2 className='text-4xl font-bold text-(--main-color)'>Rush Over!</h2>
           <div className='rounded-3xl border border-(--border-color) bg-(--card-color) p-8 shadow-xl'>
             <p className='text-sm tracking-widest text-(--secondary-color) uppercase'>
               Final Score
             </p>
-            <p className='text-7xl font-black text-(--main-color)'>
-              {score}
-            </p>
+            <p className='text-7xl font-black text-(--main-color)'>{score}</p>
           </div>
         </motion.div>
         <button

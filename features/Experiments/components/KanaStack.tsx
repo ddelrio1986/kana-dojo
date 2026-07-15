@@ -94,7 +94,7 @@ const KanaStack = () => {
 
       {/* Stack */}
       <div className='flex h-24 items-end gap-1'>
-        {stack.map((card, i) => (
+        {stack.map(card => (
           <div
             key={card.id}
             className='flex h-16 w-12 items-center justify-center rounded-lg border border-green-500 bg-green-500/20 text-green-400'

@@ -176,7 +176,7 @@ describe('Anki Converter SEO Elements', () => {
     });
 
     it('should have question and answer for each FAQ item', () => {
-      faqItems.forEach((faq, index) => {
+      faqItems.forEach(faq => {
         expect(faq.question).toBeDefined();
         expect(faq.answer).toBeDefined();
         expect(typeof faq.question).toBe('string');

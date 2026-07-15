@@ -5,7 +5,7 @@ import {
   getCanonicalNoPrefixPath,
   hasLocalePrefix,
   isTranslatorPath,
-} from './shared/utils/translator-routing';
+} from '@/shared/utils';
 
 // Create intl middleware once at module level (more efficient)
 const intlMiddleware = createMiddleware(routing);
@@ -48,9 +48,10 @@ export default function proxy(request: NextRequest) {
   const preferredLocale = acceptLanguage.toLowerCase().startsWith('es')
     ? 'es'
     : 'en';
-  const locale = cookieLocale === 'es' || cookieLocale === 'en'
-    ? cookieLocale
-    : preferredLocale;
+  const locale =
+    cookieLocale === 'es' || cookieLocale === 'en'
+      ? cookieLocale
+      : preferredLocale;
 
   // Use next-intl middleware for locale handling
   const response = intlMiddleware(request);

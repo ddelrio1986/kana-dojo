@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useMemo } from 'react';
 import {
-  CircleArrowLeft,
   ArrowLeft,
   Hourglass,
   Check,
@@ -58,12 +57,12 @@ function BentoTile({
         >
           <Icon className='h-5 w-5' />
         </span>
-        <span className='block min-w-0 break-all text-[11px] leading-tight font-bold tracking-wider text-(--secondary-color) uppercase opacity-60 sm:text-xs'>
+        <span className='block min-w-0 text-[11px] leading-tight font-bold tracking-wider break-all text-(--secondary-color) uppercase opacity-60 sm:text-xs'>
           {label}
         </span>
       </div>
       <div
-        className={`min-w-0 overflow-hidden break-words text-2xl font-black tracking-tighter text-(--main-color) sm:text-3xl ${valueClassName}`}
+        className={`min-w-0 overflow-hidden text-2xl font-black tracking-tighter break-words text-(--main-color) sm:text-3xl ${valueClassName}`}
       >
         {value}
       </div>
@@ -179,7 +178,7 @@ const SessionStats: React.FC = () => {
       </div>
 
       <div className='mb-8 flex flex-col gap-4 sm:mb-12 sm:gap-6 lg:mb-16'>
-        <div className='grid grid-cols-1 auto-rows-[minmax(140px,auto)] gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-6'>
+        <div className='grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-6'>
           <div className='relative flex flex-col items-center justify-center rounded-[2.5rem] border-2 border-(--main-color)/20 bg-(--background-color) p-6 sm:col-span-2 sm:flex-row sm:gap-10 sm:p-8 lg:col-span-3 lg:row-span-2'>
             <div className='relative flex aspect-square w-full max-w-36 flex-col items-center justify-center sm:max-w-44'>
               <div
@@ -204,10 +203,12 @@ const SessionStats: React.FC = () => {
                 </span>
               </div>
               <div className='text-3xl font-black tracking-tighter text-(--main-color) sm:text-5xl'>
-                {formatValue(numCorrectAnswers)} / {formatValue(stats.totalAnswers)}
+                {formatValue(numCorrectAnswers)} /{' '}
+                {formatValue(stats.totalAnswers)}
               </div>
               <p className='mt-2 text-sm text-(--secondary-color) lowercase opacity-60 sm:text-base'>
-                out of {stats.totalAnswers} attempts, you answered {numCorrectAnswers} correctly.
+                out of {stats.totalAnswers} attempts, you answered{' '}
+                {numCorrectAnswers} correctly.
               </p>
             </div>
           </div>
@@ -274,7 +275,7 @@ const SessionStats: React.FC = () => {
         </div>
       </div>
 
-      <div className='sticky bottom-0 z-10 -mx-4 mt-auto flex w-auto items-center justify-center gap-3 border-t-2 border-(--border-color) bg-(--background-color) py-4 px-4 select-none sm:static sm:mx-0 sm:w-full sm:justify-start sm:gap-5 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0'>
+      <div className='sticky bottom-0 z-10 -mx-4 mt-auto flex w-auto items-center justify-center gap-3 border-t-2 border-(--border-color) bg-(--background-color) px-4 py-4 select-none sm:static sm:mx-0 sm:w-full sm:justify-start sm:gap-5 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0'>
         <button
           onClick={() => {
             playClick();
@@ -339,4 +340,3 @@ const SessionStats: React.FC = () => {
 };
 
 export default SessionStats;
-

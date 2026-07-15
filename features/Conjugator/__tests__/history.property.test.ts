@@ -7,7 +7,7 @@
  * **Feature: japanese-verb-conjugator**
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 import type {
   ConjugationResult,
@@ -119,10 +119,7 @@ const conjugationResultArb: fc.Arbitrary<ConjugationResult> = fc.record({
   timestamp: fc.integer({ min: 1, max: Number.MAX_SAFE_INTEGER }),
 });
 
-/**
- * Arbitrary for HistoryEntry
- */
-const historyEntryArb: fc.Arbitrary<HistoryEntry> = fc.record({
+fc.record({
   id: fc.uuid(),
   verb: nonEmptyStringArb,
   verbType: verbTypeArb,

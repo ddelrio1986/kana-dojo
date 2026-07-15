@@ -19,7 +19,7 @@ import {
   generateBreadcrumbSchema,
   generateVerbSchema,
   CONJUGATOR_FAQ_ITEMS,
-} from '../lib/seo/structuredData';
+} from '../lib/seo';
 import type { VerbInfo, ConjugationResult, ConjugationForm } from '../types';
 
 // ============================================================================

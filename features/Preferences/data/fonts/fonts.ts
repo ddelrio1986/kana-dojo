@@ -11,6 +11,7 @@ type FontConfig = {
 
 // Use the appropriate fonts based on environment
 const fonts: FontConfig[] =
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   process.env.NODE_ENV === 'production' ? require('./fonts.prod').default : []; // Empty array in development to avoid Next.js font compilation
 
 export default fonts;

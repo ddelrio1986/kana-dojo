@@ -7,7 +7,7 @@
  * Requirements: 9.1, 9.2, 2.1-2.8
  */
 
-import type { VerbInfo, VerbType, IrregularType } from '../../types';
+import type { VerbInfo, IrregularType } from '../../types';
 import {
   IRREGULAR_VERBS,
   GODAN_ENDINGS,

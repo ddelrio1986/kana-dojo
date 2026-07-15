@@ -1,18 +1,11 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/shared/utils/utils';
-import type { VerbInfo } from '../types';
-
-interface SEOContentProps {
-  /** Optional verb info for verb-specific content */
-  verb?: VerbInfo;
-}
 
 /**
  * SEOContent - Educational content about Japanese verb conjugation
  */
-export default function SEOContent({ verb }: SEOContentProps) {
+export default function SEOContent() {
   return (
     <section className='flex flex-col gap-8 py-12'>
       <div className='flex flex-col gap-2'>
@@ -63,4 +56,3 @@ export default function SEOContent({ verb }: SEOContentProps) {
     </section>
   );
 }
-

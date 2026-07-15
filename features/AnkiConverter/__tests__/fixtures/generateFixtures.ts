@@ -8,7 +8,7 @@
 import { writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import initSqlJs, { type Database, type SqlJsStatic } from 'sql.js';
+import initSqlJs, { type SqlJsStatic } from 'sql.js';
 import JSZip from 'jszip';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -364,7 +364,6 @@ async function generateClozeFixture(): Promise<Buffer> {
     });
 
     // Count cloze deletions in the text
-    const clozeCount = (clozeSentences[i][0].match(/\{\{c\d+::/g) || []).length;
     const uniqueClozes = new Set(
       clozeSentences[i][0]
         .match(/\{\{c(\d+)::/g)

@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
-const https = require('https');
 const { execFileSync } = require('child_process');
 
 async function createRelease() {
@@ -23,6 +23,7 @@ async function createRelease() {
       execFileSync('git', ['rev-parse', tagName], { stdio: 'pipe' });
       console.log(`Tag ${tagName} already exists, skipping release creation`);
       process.exit(0);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       console.log(`Creating new release for ${tagName}...`);
     }

@@ -16,6 +16,7 @@ try {
 
   writeFileSync(outputPath, JSON.stringify(commitInfo, null, 2), 'utf-8');
   console.log(`✅ Generated commitInfo.json: ${hash}`);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (error) {
   console.warn('⚠️ Could not generate commitInfo.json (not a git repo or git not available)');
   writeFileSync(outputPath, JSON.stringify({

@@ -13,7 +13,7 @@ import useVisitStore from '../store/useVisitStore';
  */
 export function useVisitTracker(): void {
   const hasTracked = useRef(false);
-  const { loadVisits, recordVisit, isLoaded } = useVisitStore();
+  const { loadVisits, recordVisit } = useVisitStore();
 
   useEffect(() => {
     // Only run once per session

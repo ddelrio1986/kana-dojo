@@ -146,12 +146,13 @@ export default function CursorTrailRenderer() {
     };
     rafRef.current = requestAnimationFrame(tick);
 
+    const particlesCurrent = particles.current;
     return () => {
       mountedRef.current = false;
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(rafRef.current);
-      particles.current.length = 0;
+      particlesCurrent.length = 0;
     };
   }, [effectId, hasFinePointer]);
 

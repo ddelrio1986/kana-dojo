@@ -2,7 +2,7 @@
 // This configuration runs linters and formatters on staged files before commit.
 // It ensures code quality and consistency without slowing down the commit process.
 
-export default {
+const lintConfig = {
   // TypeScript and JavaScript files: run ESLint with auto-fix
   '*.{ts,tsx,js,jsx}': ['eslint --fix --max-warnings=0'],
 
@@ -13,3 +13,5 @@ export default {
   // This runs tsc on the whole project because type errors can cascade
   '*.{ts,tsx}': () => 'tsc --noEmit',
 };
+
+export default lintConfig;

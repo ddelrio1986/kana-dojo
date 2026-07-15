@@ -1,27 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import {
-  ChevronDown,
-  ChevronUp,
-  Copy,
-  Check,
-  Edit3,
-  Languages,
-  XCircle,
-  History,
-  Lightbulb,
-  Zap,
-  ShieldAlert,
-  ArrowRight,
-  RotateCcw,
-  AlertCircle,
-  GitBranch,
-  Heart,
-  PlayCircle,
-  Crown,
-  FileText,
-} from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import { cn } from '@/shared/utils/utils';
 import type {
   ConjugationCategory as CategoryType,
@@ -57,8 +37,6 @@ interface ConjugationCategoryProps {
 export default function ConjugationCategory({
   category,
   forms,
-  isExpanded,
-  onToggle,
   onCopy,
 }: ConjugationCategoryProps) {
   const categoryInfo = getCategoryInfo(category);
@@ -121,7 +99,6 @@ export default function ConjugationCategory({
 function FormRow({
   form,
   onCopy,
-  index,
 }: {
   form: ConjugationForm;
   onCopy: (form: ConjugationForm) => void;
@@ -312,4 +289,3 @@ function getCategoryInfo(category: CategoryType): {
     }
   );
 }
-

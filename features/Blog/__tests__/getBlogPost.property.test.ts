@@ -8,7 +8,7 @@ import {
   generateHeadingId,
   postExists,
 } from '../lib/getBlogPost';
-import type { Locale, Heading } from '../types/blog';
+import type { Locale } from '../types/blog';
 import { VALID_LOCALES } from '../types/blog';
 
 // Test fixtures directory

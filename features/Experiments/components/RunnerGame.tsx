@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Button } from '@/shared/ui/components/button';
 import { RefreshCcw, Play, Volume2, VolumeX } from 'lucide-react';
-import clsx from 'clsx';
 import { useGameAudio } from '../hooks/useGameAudio';
 import { generateAssets, GameAssets } from './RunnerAssets';
 
@@ -94,7 +93,7 @@ const KANA_CHARS = [
 
 export const RunnerGame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  useRef<HTMLDivElement>(null);
   const [gameState, setGameState] = useState<GameState>('START');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -127,6 +126,7 @@ export const RunnerGame = () => {
   const highScoreRef = useRef(highScore); // Keep in sync with state for persistence if needed
   const lastTimeRef = useRef(0);
   const requestRef = useRef<number | null>(null);
+  const animateRef = useRef<(time: number) => void>(() => {});
 
   useEffect(() => {
     highScoreRef.current = highScore;
@@ -186,6 +186,25 @@ export const RunnerGame = () => {
     setGameState('PLAYING');
   }, []);
 
+  // Particle System
+  const createParticles = (
+    x: number,
+    y: number,
+    count: number,
+    color: string,
+  ) => {
+    for (let i = 0; i < count; i++) {
+      particlesRef.current.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4,
+        life: 1.0,
+        color,
+      });
+    }
+  };
+
   // Jump Action
   const jump = useCallback(() => {
     if (gameState !== 'PLAYING') {
@@ -218,7 +237,7 @@ export const RunnerGame = () => {
       // Add magical particles
       createParticles(player.x + 20, player.y + 40, 8, 'rgba(100,200,255,0.6)');
     }
-  }, [gameState, resetGame]);
+  }, [audioEnabled, gameState, playSound, resetGame]);
 
   const dive = useCallback(() => {
     if (gameState === 'PLAYING' && !playerRef.current.grounded) {
@@ -226,25 +245,6 @@ export const RunnerGame = () => {
       playerRef.current.isDiving = true;
     }
   }, [gameState]);
-
-  // Particle System
-  const createParticles = (
-    x: number,
-    y: number,
-    count: number,
-    color: string,
-  ) => {
-    for (let i = 0; i < count; i++) {
-      particlesRef.current.push({
-        x,
-        y,
-        vx: (Math.random() - 0.5) * 4,
-        vy: (Math.random() - 0.5) * 4,
-        life: 1.0,
-        color,
-      });
-    }
-  };
 
   const updateParticles = () => {
     for (let i = particlesRef.current.length - 1; i >= 0; i--) {
@@ -722,10 +722,16 @@ export const RunnerGame = () => {
       );
       ctx.fillText(`HI: ${highScoreRef.current}`, CANVAS_WIDTH - 20, 60);
 
-      requestRef.current = requestAnimationFrame(animate);
+      requestRef.current = requestAnimationFrame(time =>
+        animateRef.current(time),
+      );
     },
-    [gameState],
+    [audioEnabled, gameState, playSound],
   );
+
+  useEffect(() => {
+    animateRef.current = animate;
+  }, [animate]);
 
   // Input Handling
   useEffect(() => {
@@ -741,7 +747,7 @@ export const RunnerGame = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [jump]);
+  }, [dive, jump]);
 
   useEffect(() => {
     if (gameState === 'PLAYING') {
@@ -767,7 +773,7 @@ export const RunnerGame = () => {
           )}
         </Button>
       </div>
-      <div className='relative aspect-[2/1] w-full overflow-hidden rounded-xl border border-(--border-color) bg-(--card-color) shadow-sm'>
+      <div className='relative aspect-2/1 w-full overflow-hidden rounded-xl border border-(--border-color) bg-(--card-color) shadow-sm'>
         <canvas
           ref={canvasRef}
           width={CANVAS_WIDTH}
@@ -825,4 +831,3 @@ export const RunnerGame = () => {
     </div>
   );
 };
-

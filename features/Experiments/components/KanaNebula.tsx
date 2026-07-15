@@ -16,17 +16,41 @@ interface StarKana {
   opacity: number;
 }
 
+interface DistantStar {
+  id: number;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  opacity: number;
+}
+
 export default function KanaNebula() {
   const [stars, setStars] = useState<StarKana[]>([]);
+  const [starsSpawned, setStarsSpawned] = useState(0); // Safe state-driven counter for rendering
   const { playClick } = useClick();
   const idCounter = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Initialize distant static stars safely ONCE on mount
+  const [distantStars] = useState<DistantStar[]>(() =>
+    Array.from({ length: 100 }, (_, i) => ({
+      id: i,
+      width: Math.random() * 2,
+      height: Math.random() * 2,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      opacity: Math.random(),
+    })),
+  );
+
   useEffect(() => {
     const spawnStar = () => {
       const kanaObj = allKana[Math.floor(Math.random() * allKana.length)];
+      const nextId = idCounter.current++;
+
       const newStar: StarKana = {
-        id: idCounter.current++,
+        id: nextId,
         kana: kanaObj.kana,
         romaji: kanaObj.romanji,
         x: Math.random() * 100,
@@ -35,7 +59,9 @@ export default function KanaNebula() {
         scale: Math.random() * 0.5 + 0.1,
         opacity: Math.random() * 0.5 + 0.2,
       };
+
       setStars(prev => [...prev, newStar].slice(-50)); // Keep legacy clean
+      setStarsSpawned(prev => prev + 1); // Keep UI count in sync safely
     };
 
     const interval = setInterval(spawnStar, 400);
@@ -44,8 +70,14 @@ export default function KanaNebula() {
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      document.documentElement.style.setProperty('--mouse-x', `${event.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${event.clientY}px`);
+      document.documentElement.style.setProperty(
+        '--mouse-x',
+        `${event.clientX}px`,
+      );
+      document.documentElement.style.setProperty(
+        '--mouse-y',
+        `${event.clientY}px`,
+      );
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -65,16 +97,16 @@ export default function KanaNebula() {
 
       {/* Distant Stars (Static) */}
       <div className='absolute inset-0 opacity-30'>
-        {[...Array(100)].map((_, i) => (
+        {distantStars.map(star => (
           <div
-            key={i}
+            key={star.id}
             className='absolute rounded-full bg-white transition-opacity'
             style={{
-              width: Math.random() * 2,
-              height: Math.random() * 2,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random(),
+              width: star.width,
+              height: star.height,
+              top: `${star.top}%`,
+              left: `${star.left}%`,
+              opacity: star.opacity,
             }}
           />
         ))}
@@ -145,8 +177,9 @@ export default function KanaNebula() {
         </div>
       </motion.div>
 
+      {/* Sector UI reading from clean state */}
       <div className='absolute right-10 bottom-10 z-20 font-mono text-[10px] tracking-widest text-indigo-400 uppercase opacity-20'>
-        Sector {Math.floor(idCounter.current / 10)}-Alpha
+        Sector {Math.floor(starsSpawned / 10)}-Alpha
       </div>
     </div>
   );

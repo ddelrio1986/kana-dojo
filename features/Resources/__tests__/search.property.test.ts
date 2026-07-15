@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { searchResources, resourceMatchesQuery } from '../lib/search';
+import { searchResources, resourceMatchesQuery } from '../lib';
 import {
   CATEGORY_IDS,
   DIFFICULTY_LEVELS,

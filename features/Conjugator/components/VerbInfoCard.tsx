@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, BookOpen, Info } from 'lucide-react';
 import { cn } from '@/shared/utils/utils';
 import type { VerbInfo, VerbType, IrregularType } from '../types';
 
@@ -22,8 +20,6 @@ interface VerbInfoCardProps {
  * Requirements: 9.1, 9.2, 9.3, 10.2
  */
 export default function VerbInfoCard({ verb }: VerbInfoCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const verbTypeInfo = getVerbTypeInfo(verb.type, verb.irregularType);
 
   return (
@@ -308,4 +304,3 @@ function getIrregularTypeInfo(irregularType: IrregularType): {
       };
   }
 }
-

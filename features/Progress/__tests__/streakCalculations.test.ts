@@ -25,21 +25,6 @@ const uniqueDateArrayArb = fc
   .map(dates => [...new Set(dates)]);
 
 // Helper to generate consecutive date arrays
-const consecutiveDatesArb = (length: number) =>
-  fc
-    .date({
-      min: new Date('2020-01-01'),
-      max: new Date('2029-12-31'),
-    })
-    .map(startDate => {
-      const dates: string[] = [];
-      for (let i = 0; i < length; i++) {
-        const d = new Date(startDate);
-        d.setDate(d.getDate() + i);
-        dates.push(formatDate(d));
-      }
-      return dates;
-    });
 
 describe('Streak Calculations', () => {
   /**

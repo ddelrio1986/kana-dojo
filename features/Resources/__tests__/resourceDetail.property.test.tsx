@@ -11,7 +11,7 @@
 import React from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 import * as fc from 'fast-check';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import { ResourceDetailModal } from '../components/ResourceDetailModal';
 import {
   CATEGORY_IDS,
@@ -41,7 +41,7 @@ const difficultyArb: fc.Arbitrary<DifficultyLevel> = fc.constantFrom(
   ...DIFFICULTY_LEVELS,
 );
 const priceTypeArb: fc.Arbitrary<PriceType> = fc.constantFrom(...PRICE_TYPES);
-const platformArb: fc.Arbitrary<Platform> = fc.constantFrom(...PLATFORMS);
+fc.constantFrom(...PLATFORMS);
 
 // Generate unique strings to avoid collision issues
 const uniqueStringArb = fc.uuid().map(uuid => `test-${uuid.slice(0, 8)}`);

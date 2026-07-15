@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { kana } from '@/features/Kana/data/kana';
 import { useParams } from 'next/navigation';
-import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
+import { useThemePreferences } from '@/features/Preferences';
 
 const sliceRanges = {
   hiraganabase: [0, 10],
@@ -18,7 +18,7 @@ const SetDictionary = () => {
   const params = useParams<{ subset: string }>();
   const { subset }: { subset: string } = params;
   const [group, subgroup] = subset.split('-');
-  const displayKana = usePreferencesStore(state => state.displayKana);
+  const { displayKana } = useThemePreferences();
 
   const key = (group + subgroup) as keyof typeof sliceRanges;
   const range = sliceRanges[key];

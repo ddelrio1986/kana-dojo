@@ -4,11 +4,7 @@ import { calculateMasteryDistribution } from '../hooks/useStatsAggregator';
 import { classifyCharacter } from '../lib/classifyCharacter';
 import { detectContentType } from '../lib/detectContentType';
 import { calculateAccuracy } from '../lib/calculateAccuracy';
-import type {
-  CharacterMasteryItem,
-  MasteryLevel,
-  ContentType,
-} from '../types/stats';
+import type { CharacterMasteryItem } from '../types/stats';
 
 /**
  * Generates a random CharacterMasteryItem for testing

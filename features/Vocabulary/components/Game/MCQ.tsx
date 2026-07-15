@@ -1,6 +1,6 @@
 'use client';
 import clsx from 'clsx';
-import { useState, useEffect, useRef, useMemo, memo } from 'react';
+import { useState, useEffect, useRef, useMemo, memo, useCallback } from 'react';
 import { CircleCheck, CircleX } from 'lucide-react';
 import { Random } from 'random-js';
 import { IVocabObj } from '@/features/Vocabulary/store/useVocabStore';
@@ -187,7 +187,7 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
       : correctWordObj?.reading; // reading quiz: answer is always reading
 
   // Get incorrect options based on mode and quiz type
-  const getIncorrectOptions = (): string[] => {
+  const getIncorrectOptions = useCallback((): string[] => {
     // Filter out the current word
     const incorrectWordObjs = selectedWordObjs.filter(
       obj => obj.word !== correctChar,
@@ -205,7 +205,7 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
         .slice(0, 2);
     }
     return []; // Fallback in case quizType is neither 'meaning' nor 'reading'
-  };
+  }, [correctChar, isReverse, quizType, selectedWordObjs]);
 
   const randomIncorrectOptions = getIncorrectOptions();
 
@@ -231,7 +231,14 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
       ) as string[],
     );
     setWrongSelectedAnswers([]);
-  }, [correctChar, hasWords, isReverse, quizType]);
+  }, [
+    correctChar,
+    getIncorrectOptions,
+    hasWords,
+    isReverse,
+    quizType,
+    targetChar,
+  ]);
 
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -476,4 +483,3 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
 };
 
 export default VocabMCQ;
-

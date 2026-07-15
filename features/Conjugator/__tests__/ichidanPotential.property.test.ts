@@ -10,12 +10,12 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { classifyVerb } from '../lib/engine/classifyVerb';
+import { classifyVerb } from '../lib/engine';
 import {
   conjugateIchidan,
   getIchidanTraditionalPotential,
   getIchidanColloquialPotential,
-} from '../lib/engine/conjugateIchidan';
+} from '../lib/engine';
 
 // ============================================================================
 // Test Data - Ichidan Verbs

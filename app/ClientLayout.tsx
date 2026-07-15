@@ -111,10 +111,6 @@ export default function ClientLayout({
   const pathname = usePathname();
 
   useEffect(() => {
-    const isDev = process.env.NODE_ENV === 'development';
-    const isPreviewDeployment =
-      process.env.NODE_ENV === 'production' &&
-      process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production';
     const isTargetRoute = /\/(kana|kanji|vocabulary)(\/|$)/.test(pathname);
     const isPreferencesRoute = /\/preferences(\/|$)/.test(pathname);
     const isProgressRoute = /\/progress(\/|$)/.test(pathname);
@@ -341,4 +337,3 @@ export default function ClientLayout({
     </div>
   );
 }
-

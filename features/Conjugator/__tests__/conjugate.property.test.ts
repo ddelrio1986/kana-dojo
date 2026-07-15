@@ -9,7 +9,7 @@
 
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import { conjugate, conjugateOrThrow } from '../lib/engine/conjugate';
+import { conjugate, conjugateOrThrow } from '../lib/engine';
 import { ALL_CONJUGATION_CATEGORIES } from '../types';
 
 // ============================================================================

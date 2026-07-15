@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import { removeLocaleFromPath } from '@/shared/utils/pathUtils';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import { useScrollVisibility } from '@/shared/hooks/generic/useScrollVisibility';
-import { CircleCheck, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { ActionButton } from '@/shared/ui/components/ActionButton';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/shared/utils/utils';
@@ -280,7 +280,7 @@ const SelectionStatusBar = () => {
               borderColorScheme='main'
               borderRadius='3xl'
               borderBottomThickness={10}
-              className='w-auto bg-(--main-color)/80 px-4 py-3 lg:px-6 motion-safe:animate-float [--float-distance:-3px] sm:[--float-distance:-5px]'
+              className='motion-safe:animate-float w-auto bg-(--main-color)/80 px-4 py-3 [--float-distance:-3px] sm:[--float-distance:-5px] lg:px-6'
               onClick={handleClear}
               aria-label='Clear selected levels'
             >

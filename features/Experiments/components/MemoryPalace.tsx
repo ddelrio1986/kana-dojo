@@ -2,7 +2,11 @@
 import { useEffect, useState, useCallback } from 'react';
 import { EyeOff, Play } from 'lucide-react';
 import clsx from 'clsx';
-import { useClick, useCorrect, useError } from '@/shared/hooks/generic/useAudio';
+import {
+  useClick,
+  useCorrect,
+  useError,
+} from '@/shared/hooks/generic/useAudio';
 import { hiraganaOnly } from '../data/kanaData';
 
 type GamePhase = 'memorize' | 'recall' | 'result';
@@ -73,7 +77,7 @@ const MemoryPalace = () => {
   useEffect(() => {
     setIsMounted(true);
     startGame();
-  }, []);
+  }, [startGame]);
 
   useEffect(() => {
     if (phase !== 'memorize') return;

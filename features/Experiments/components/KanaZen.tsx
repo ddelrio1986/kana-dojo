@@ -8,23 +8,24 @@ import { allKana } from '../data/kanaData';
  */
 const KanaZen = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [floaters] = useState(() =>
+    Array.from({ length: 25 }, (_, i) => {
+      const kana = allKana[Math.floor(Math.random() * allKana.length)];
+      return {
+        id: i,
+        kana: kana.kana,
+        x: Math.random() * 90 + 5,
+        y: Math.random() * 80 + 10,
+        size: Math.random() * 1.5 + 1,
+        delay: Math.random() * 5,
+        duration: Math.random() * 4 + 6,
+      };
+    }),
+  );
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const floaters = Array.from({ length: 25 }, (_, i) => {
-    const kana = allKana[Math.floor(Math.random() * allKana.length)];
-    return {
-      id: i,
-      kana: kana.kana,
-      x: Math.random() * 90 + 5,
-      y: Math.random() * 80 + 10,
-      size: Math.random() * 1.5 + 1,
-      delay: Math.random() * 5,
-      duration: Math.random() * 4 + 6,
-    };
-  });
 
   if (!isMounted) return null;
 

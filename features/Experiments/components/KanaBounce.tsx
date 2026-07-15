@@ -1,6 +1,5 @@
 'use client';
 import { useState, useCallback, useEffect } from 'react';
-import clsx from 'clsx';
 import { allKana } from '../data/kanaData';
 
 /**
@@ -111,10 +110,7 @@ const KanaBounce = () => {
             boxShadow: `0 0 10px hsla(${ball.hue}, 70%, 50%, 0.5)`,
           }}
         >
-          <span
-            lang='ja'
-            className='text-lg text-(--main-color) md:text-xl'
-          >
+          <span lang='ja' className='text-lg text-(--main-color) md:text-xl'>
             {ball.kana}
           </span>
         </div>

@@ -72,13 +72,14 @@ const initialState: ConversionState = {
 export function useConversionWorker(): UseConversionWorkerReturn {
   const [state, setState] = useState<ConversionState>(initialState);
   const workerManager = useRef(getWorkerManager());
-  const isWorkerSupported = workerManager.current.isSupported();
+  const isWorkerSupported = getWorkerManager().isSupported();
 
   // Cleanup on unmount
   useEffect(() => {
+    const workerManagerCurrent = workerManager.current;
     return () => {
       // Cleanup worker memory when component unmounts
-      workerManager.current.cleanup();
+      workerManagerCurrent.cleanup();
     };
   }, []);
 

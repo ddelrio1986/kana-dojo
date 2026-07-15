@@ -15,7 +15,7 @@ import {
   isValidSqliteDatabase,
   isAPKGFile,
   parseAPKG,
-} from '../parsers/apkgParser';
+} from '../parsers';
 import { ConversionError, ErrorCode } from '../types';
 
 // SQLite magic bytes: "SQLite format 3\0"

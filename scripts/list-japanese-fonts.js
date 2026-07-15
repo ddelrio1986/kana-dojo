@@ -2,6 +2,7 @@
  * Script to list all Japanese fonts available in next/font/google
  * Run with: cmd /c node scripts/list-japanese-fonts.js
  */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const fs = require('fs');
 const path = require('path');
@@ -32,35 +33,6 @@ try {
       .sort();
 
     // Known Japanese font patterns/names
-    const japaneseKeywords = [
-      'Noto_Sans_JP',
-      'Noto_Serif_JP',
-      'Zen',
-      'Klee',
-      'Kosugi',
-      'Sawarabi',
-      'Shippori',
-      'Kaisei',
-      'Yuji',
-      'Hina',
-      'Murecho',
-      'Stick',
-      'Reggae',
-      'RocknRoll',
-      'Potta',
-      'Kiwi_Maru',
-      'DotGothic',
-      'Hachi_Maru',
-      'Dela_Gothic',
-      'M_PLUS',
-      'Yusei',
-      'New_Tegomin',
-      'Mochiy',
-      'BIZ_UD',
-      'Rampart',
-      'WDXL_Lubrifont',
-      'IBM_Plex_Sans_JP',
-    ];
 
     const japanesePatterns = [
       /_JP($|_)/,

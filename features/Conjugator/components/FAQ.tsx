@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, Plus, Minus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/shared/utils/utils';
 import { CONJUGATOR_FAQ_ITEMS, type FAQItem } from '../lib/seo/structuredData';
 
@@ -188,4 +188,3 @@ function FAQItemComponent({
     </div>
   );
 }
-

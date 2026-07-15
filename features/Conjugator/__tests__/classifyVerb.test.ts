@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { classifyVerb } from '../lib/engine/classifyVerb';
+import { classifyVerb } from '../lib/engine';
 
 describe('Irregular Verb Classification', () => {
   describe('する (to do) - Requirements 2.3', () => {

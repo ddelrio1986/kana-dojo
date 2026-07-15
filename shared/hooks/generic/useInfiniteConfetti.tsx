@@ -88,15 +88,7 @@ function useFireworkEmojiConfetti({
         intervalRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    active,
-    emojis.join(':'),
-    scalar,
-    duration,
-    intervalMs,
-    particleBaseCount,
-  ]);
+  }, [active, scalar, duration, intervalMs, particleBaseCount, emojis]);
 }
 
 export default useFireworkEmojiConfetti;

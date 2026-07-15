@@ -12,14 +12,13 @@
 
 import { Command } from 'commander';
 import { readFile, writeFile } from 'fs/promises';
-import { basename } from 'path';
-import { createConversionPipeline } from '../features/AnkiConverter/lib/conversionPipeline.js';
+import { createConversionPipeline } from '@/features/AnkiConverter/lib';
 import type {
   ConversionOptions,
   ConversionResult,
   ProgressEvent,
-} from '../features/AnkiConverter/types/index.js';
-import { ConversionError } from '../features/AnkiConverter/types/index.js';
+} from '@/features/AnkiConverter';
+import { ConversionError } from '@/features/AnkiConverter';
 
 /**
  * CLI version

@@ -14,7 +14,7 @@ import {
   triggerBlobDownload,
   downloadConversionResult,
   isDownloadSupported,
-} from '../lib/fileDownload';
+} from '../lib';
 import type { ConversionResult } from '../types';
 
 /**

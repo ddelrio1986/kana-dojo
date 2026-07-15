@@ -7,7 +7,7 @@
  * **Validates: Requirements 2.5**
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it } from 'vitest';
 import fc from 'fast-check';
 import { ConversionError, ErrorCode } from '../types';
 

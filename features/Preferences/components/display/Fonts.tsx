@@ -1,6 +1,6 @@
 'use client';
 import clsx from 'clsx';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
 import { buttonBorderStyles } from '@/shared/utils/styles';
@@ -170,7 +170,7 @@ const Fonts = ({ useNewIconDesign = false }: FontsProps) => {
         <p className='text-3xl text-(--secondary-color)' lang='ja'>
           人日大小学 校生先円上下中外右左名前時分国
         </p>
-        {/* 
+        {/*
         <h4 className='text-xl'>Sample sentence:</h4>
         <p className='text-3xl text-(--secondary-color)' lang='ja'>
           人類社会のすべての構成員の固有の尊厳と平等で譲ることのできない権利とを承認することは
@@ -182,4 +182,3 @@ const Fonts = ({ useNewIconDesign = false }: FontsProps) => {
 };
 
 export default Fonts;
-

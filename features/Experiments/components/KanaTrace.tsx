@@ -1,9 +1,8 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useClick } from '@/shared/hooks/generic/useAudio';
 import { allKana } from '../data/kanaData';
-import { Eraser, Download, Palette, Undo, Type } from 'lucide-react';
+import { Eraser, Download, Type } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function KanaTrace() {
@@ -113,9 +112,7 @@ export default function KanaTrace() {
     <div className='flex min-h-[85vh] flex-1 flex-col gap-6'>
       <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
         <div>
-          <h1 className='text-3xl font-bold text-(--main-color)'>
-            Kana Trace
-          </h1>
+          <h1 className='text-3xl font-bold text-(--main-color)'>Kana Trace</h1>
           <p className='text-(--secondary-color)'>
             Practice drawing strokes in a relaxing way
           </p>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import useStatsStore from '../store/useStatsStore';
-import useVisitStore from '../store/useVisitStore';
 import useAchievementStore, {
   ACHIEVEMENTS,
 } from '@/features/Achievements/store/useAchievementStore';
@@ -31,57 +30,6 @@ export interface StatsAggregatorState {
   error: string | null;
   /** Refresh gauntlet stats */
   refreshGauntletStats: () => Promise<void>;
-}
-
-/**
- * Creates default timed mode stats
- */
-function createDefaultTimedStats(): TimedModeStats {
-  return {
-    correct: 0,
-    wrong: 0,
-    streak: 0,
-    bestStreak: 0,
-    accuracy: 0,
-  };
-}
-
-/**
- * Creates default mastery distribution
- */
-function createDefaultMasteryDistribution(): MasteryDistribution {
-  return {
-    mastered: 0,
-    learning: 0,
-    needsPractice: 0,
-    total: 0,
-  };
-}
-
-/**
- * Creates default aggregated stats
- */
-function createDefaultStats(): AggregatedStats {
-  return {
-    totalSessions: 0,
-    totalCorrect: 0,
-    totalIncorrect: 0,
-    overallAccuracy: 0,
-    bestStreak: 0,
-    uniqueCharactersLearned: 0,
-    characterMastery: [],
-    masteryDistribution: createDefaultMasteryDistribution(),
-    timedKana: createDefaultTimedStats(),
-    timedKanji: createDefaultTimedStats(),
-    timedVocabulary: createDefaultTimedStats(),
-    gauntlet: null,
-    achievements: {
-      totalPoints: 0,
-      level: 1,
-      unlockedCount: 0,
-      totalAchievements: ACHIEVEMENTS.length,
-    },
-  };
 }
 
 /**
@@ -428,4 +376,3 @@ export function getTopMasteredCharacters(
 }
 
 export default useStatsAggregator;
-

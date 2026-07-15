@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { Trophy } from 'lucide-react';
-import type { CSSProperties } from 'react';
 
 interface StatCardProps {
   value: number;
@@ -105,7 +104,6 @@ export const HeroSection = ({
   totalPoints,
   level,
   completionPercentage,
-  statCardHaloGap = 10,
 }: HeroSectionProps) => {
   const stats = [
     { value: unlockedCount, label: 'Unlocked' },

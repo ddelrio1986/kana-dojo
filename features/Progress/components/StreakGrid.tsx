@@ -312,7 +312,7 @@ function YearGrid({ visits }: { visits: string[]; days: string[] }) {
   let currentWeek: (string | null)[] = [...EMPTY_WEEK];
 
   // Find what day of the week Jan 1 falls on
-  const jan1 = new Date(currentYear, 0, 1);
+  new Date(currentYear, 0, 1);
 
   // Fill in days before Jan 1 in the first week with nulls (already done)
   for (const day of allYearDays) {
@@ -479,4 +479,3 @@ export default function StreakGrid({
 
 // Export for testing
 export { getDaysInPeriod };
-

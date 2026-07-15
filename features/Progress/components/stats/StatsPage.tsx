@@ -11,7 +11,6 @@ import {
   Users,
   CheckCircle,
   XCircle,
-  Trash,
   AlertTriangle,
   ChartColumn,
 } from 'lucide-react';
@@ -25,8 +24,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/shared/ui/components/alert-dialog';
-import { ActionButton } from '@/shared/ui/components/ActionButton';
-import { useClick } from '@/shared/hooks/generic/useAudio';
 import useStatsStore from '../../store/useStatsStore';
 import { useStatsAggregator } from '../../hooks/useStatsAggregator';
 import OverviewStatsCard from './OverviewStatsCard';
@@ -90,7 +87,6 @@ function EmptyState() {
  * and cohesive visual design.
  */
 export default function StatsPage({ className }: StatsPageProps) {
-  const { playClick } = useClick();
   const { clearAllProgress } = useStatsStore(
     useShallow(state => ({ clearAllProgress: state.clearAllProgress })),
   );
@@ -98,11 +94,6 @@ export default function StatsPage({ className }: StatsPageProps) {
   const [showResetModal, setShowResetModal] = useState(false);
 
   const hasData = stats.totalSessions > 0 || stats.uniqueCharactersLearned > 0;
-
-  const handleResetClick = () => {
-    playClick();
-    setShowResetModal(true);
-  };
 
   const handleConfirmReset = () => {
     clearAllProgress();
@@ -309,4 +300,3 @@ export function getStatsOverviewDisplayValues(stats: {
     hasAllMetrics: true,
   };
 }
-
