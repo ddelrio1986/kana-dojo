@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Copy, Check, Loader2 } from 'lucide-react';
-import { cn } from '@/shared/utils/utils';
+import { useMemo } from 'react';
+import { Loader2 } from 'lucide-react';
 import type {
   ConjugationResult,
   ConjugationCategory as CategoryType,
@@ -29,9 +28,6 @@ export default function ConjugationResults({
   isLoading,
   onCopyForm,
 }: ConjugationResultsProps) {
-  const [statusMessage, setStatusMessage] = useState<string>('');
-  const previousResultRef = useRef<ConjugationResult | null>(null);
-
   // Group forms by category
   const formsByCategory = useMemo(() => {
     if (!result) return new Map<CategoryType, ConjugationForm[]>();
@@ -45,24 +41,12 @@ export default function ConjugationResults({
     return grouped;
   }, [result]);
 
-  // Update status message when result changes for screen readers
-  useEffect(() => {
-    if (result && result !== previousResultRef.current) {
-      setStatusMessage(
-        `Conjugation complete for ${result.verb.dictionaryForm}. ${result.forms.length} forms available.`,
-      );
-      previousResultRef.current = result;
-    } else if (isLoading) {
-      setStatusMessage('Conjugating...');
-    }
-  }, [result, isLoading]);
-
   if (isLoading) {
     return (
       <div className='flex flex-col items-center justify-center py-20 text-center'>
         <Loader2 className='h-8 w-8 animate-spin text-(--main-color) opacity-20' />
         <p className='mt-4 text-xl font-bold tracking-tight text-(--main-color) opacity-40'>
-          Conjugating...
+          Conjugating…
         </p>
       </div>
     );
@@ -90,13 +74,13 @@ export default function ConjugationResults({
         aria-live='polite'
         aria-atomic='true'
       >
-        {statusMessage}
+        {`Conjugation complete for ${result.verb.dictionaryForm}. ${result.forms.length} form${result.forms.length > 0 ? 's' : null} available.`}
       </div>
 
       <div className='flex flex-col gap-8'>
         <div className='flex flex-col gap-2'>
           <div className='flex items-center gap-2 text-[10px] font-bold tracking-widest text-(--secondary-color)/40 uppercase'>
-            <div className='h-[1px] w-4 bg-(--main-color)' />
+            <div className='h-px w-4 bg-(--main-color)' />
             <span>Analysis</span>
           </div>
           <h2 className='text-2xl font-bold tracking-tight text-(--main-color)'>
@@ -130,4 +114,3 @@ export default function ConjugationResults({
     </div>
   );
 }
-
