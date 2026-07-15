@@ -15,7 +15,7 @@ export default function ServiceWorkerRegistration() {
             const registration = await navigator.serviceWorker.register(
               '/sw.js',
               {
-                scope: '/sounds/',
+                scope: '/',
               },
             );
 
