@@ -11,6 +11,7 @@ import {
 } from '@/shared/ui-composite/SEO/StructuredData';
 import { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
+import Script from 'next/script';
 import SessionPrefetch from '@/shared/ui-composite/Performance/SessionPrefetch';
 
 const googleVerificationToken = process.env.GOOGLE_VERIFICATION_TOKEN || '';
@@ -121,6 +122,10 @@ const isAnalyticsEnabled =
   process.env.NODE_ENV === 'production' &&
   process.env.ANALYTICS_DISABLED !== 'true';
 
+const isAdSenseEnabled =
+  process.env.NODE_ENV === 'production' &&
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production';
+
 interface RootLayoutProps {
   readonly children: React.ReactNode;
 }
@@ -168,6 +173,14 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           href='https://translation.googleapis.com'
           crossOrigin='anonymous'
         />
+        {isAdSenseEnabled && (
+          <Script
+            async
+            src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494430364707020'
+            crossOrigin='anonymous'
+            strategy='afterInteractive'
+          />
+        )}
       </head>
       <body>
         <SessionPrefetch />
